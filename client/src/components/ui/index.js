@@ -19,3 +19,4 @@ export { default as RadioList } from "./other/RadioList";
 export { default as DualRangeSlider } from "./inputs/DualRangeSlider";
 export { default as Checkbox } from "./inputs/Checkbox";
 export { default as ChipSelect } from "./other/ChipSelect";
+export { default as Pagination } from "./other/Pagination";

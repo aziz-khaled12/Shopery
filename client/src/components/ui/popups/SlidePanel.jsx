@@ -2,16 +2,39 @@ import React from "react";
 import { X } from "lucide-react";
 import Button from "../buttons/Button";
 
-export default function SlidePanel({ open, onClose, children, buttons, title = "Title" }) {
+export default function SlidePanel({
+  open,
+  onClose,
+  children,
+  buttons,
+  title = "Title",
+  side = "right" // default to right
+}) {
   const handleKeyDown = (event) => {
     if (event.key === "Escape" && open) {
       onClose();
     }
   };
 
+  // Determine justify class based on side prop
+  const justifyClass = {
+    right: "justify-end",
+    left: "justify-start",
+    top: "justify-start items-start",
+    bottom: "justify-start items-end"
+  }[side];
+
+  // Determine panel width/height classes based on side
+  const panelSizeClass = {
+    right: `${open ? 'w-96 md:w-[500px]' : 'w-0'}`,
+    left: `${open ? 'w-96 md:w-[500px]' : 'w-0'}`,
+    top: `${open ? 'h-96 md:h-[500px]' : 'h-0'} w-full`,
+    bottom: `${open ? 'h-96 md:h-[500px]' : 'h-0'} w-full`
+  }[side];
+
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 flex ${justifyClass} transition-opacity duration-300 ${
         open ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
       onKeyDown={handleKeyDown}
@@ -27,9 +50,7 @@ export default function SlidePanel({ open, onClose, children, buttons, title = "
 
       {/* Panel */}
       <div
-        className={`relative h-full bg-white shadow-xl flex flex-col transition-all duration-300 ease-out ${
-          open ? 'w-96 md:w-[500px]' : 'w-0'
-        }`}
+        className={`relative ${panelSizeClass} bg-white shadow-xl flex flex-col transition-all duration-300 ease-out`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

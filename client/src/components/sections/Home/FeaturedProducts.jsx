@@ -15,10 +15,7 @@ const FeaturedProducts = () => {
           return (
             <ProductCard
               key={index}
-              image={product.image}
-              price={product.price}
-              rating={product.rating}
-              title={product.title}
+              product={product}
             />
           );
         })}

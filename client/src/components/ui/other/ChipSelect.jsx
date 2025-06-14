@@ -22,10 +22,10 @@ const ChipSelect = ({ options = [], selected = [], setSelected }) => {
             <button
               key={option.id}
               onClick={() => handleToggle(option.value)}
-              className={`px-3 py-1 rounded-full text-sm border transition-all duration-200 ${
+              className={`px-4 py-1.5 rounded-full text-sm border transition-all duration-200 cursor-pointer bg-gray-200 ${
                 selected.includes(option.value)
                   ? "bg-primary text-white border-primary"
-                  : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                  : "border-gray-300 text-gray-700 hover:bg-gray-300"
               }`}
             >
               {option.label}

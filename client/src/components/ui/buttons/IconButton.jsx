@@ -2,7 +2,7 @@ import React from "react";
 
 const sizeClassesMap = {
   small: "px-6 py-2.5 gap-2 text-2xs",
-  medium: "text-sm px-8 py-3 gap-3",
+  medium: "sm:text-sm sm:px-8 sm:py-3 gap-3 text-xs px-4 py-2",
   large: "text-base px-10 gap-4 py-4",
 };
 
@@ -35,13 +35,12 @@ const IconButton = ({
   icon,
   start = false,
   end = false,
+  onClick,
 }) => {
   if (start && end) {
     throw new Error("IconButton: Only one of 'start' or 'end' can be true.");
   }
   
-  console.log("type of icon: ", typeof icon);
-  console.log("icon: ", icon);
 
   const isIconOnly = children.trim() === "";
 
@@ -64,6 +63,7 @@ const IconButton = ({
             : ""
         }
         ${isIconOnly ? "h-10 w-10" : responsiveSizeClasses(size)}`}
+      onClick={onClick}
     >
       {isIconOnly ? (
         icon

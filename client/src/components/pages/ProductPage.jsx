@@ -28,18 +28,20 @@ const ProductPage = () => {
 
   return (
     <div className="w-full sm:px-page px-6">
-      <section className="flex gap-6 w-full max-w-7xl">
-        <ImageSlider images={images} />
+      <section className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl">
+        <div className="w-full lg:w-1/2">
+          <ImageSlider images={images} />
+        </div>
 
-        <div className="w-full">
-          <div className="flex items-center gap-2 mb-3">
-            <h1 className="text-3xl font-semibold">Chinese Cabbage</h1>
-            <div className="text-sm rounded-sm text-primary px-2 py-1 bg-primary/10">
+        <div className="w-full lg:w-1/2">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
+            <h1 className="text-2xl sm:text-3xl font-semibold">Chinese Cabbage</h1>
+            <div className="text-sm rounded-sm text-primary px-2 py-1 bg-primary/10 w-fit">
               In Stock
             </div>
           </div>
 
-          <div className="flex w-full items-center gap-7 mb-5">
+          <div className="flex flex-col sm:flex-row w-full sm:items-center gap-4 sm:gap-7 mb-5">
             <div className="flex items-center gap-1.5">
               <div className="flex gap-0.5">
                 {Array.from({ length: 5 }, (_, index) => index + 1).map(
@@ -58,14 +60,15 @@ const ProductPage = () => {
               SKU: <span className="text-gray-500 font-normal">2,51,594</span>
             </div>
           </div>
-          <div className="flex items-center gap-3 mb-5">
+          
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
             <div className="gap-1 flex items-center">
-              <span className="line-through text-xl text-gray-300">$48.00</span>
-              <span className="line-through text-2xl font-medium text-hard-primary">
+              <span className="line-through text-lg sm:text-xl text-gray-300">$48.00</span>
+              <span className="line-through text-xl sm:text-2xl font-medium text-hard-primary">
                 $17.28
               </span>
             </div>
-            <div className="text-sm rounded-full text-danger px-3 py-1 bg-danger/10 font-medium">
+            <div className="text-sm rounded-full text-danger px-3 py-1 bg-danger/10 font-medium w-fit">
               64% Off
             </div>
           </div>
@@ -73,7 +76,7 @@ const ProductPage = () => {
           <div className="w-full h-0.5 bg-gray-200"></div>
 
           <div className="w-full my-6">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <div className="text-sm">
                 Brand:{" "}
                 <span className="text-hard-primary font-medium">Organic</span>
@@ -85,7 +88,7 @@ const ProductPage = () => {
                 <IconButton2 icon={<Instagram />} />
               </div>
             </div>
-            <p className="text-sm text-gray-400 mt-4 max-w-xl">
+            <p className="text-sm text-gray-400 mt-4">
               Class aptent taciti sociosqu ad litora torquent per conubia
               nostra, per inceptos himenaeos. Nulla nibh diam, blandit vel
               consequat nec, ultrices et ipsum. Nulla varius magna a consequat
@@ -102,14 +105,15 @@ const ProductPage = () => {
             </IconButton>
             <IconButton2 icon={<Heart />} />
           </div>
+          
           <div className="w-full h-0.5 bg-gray-200"></div>
 
-          <div className="flex items-center gap-2 mt-6 mb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-6 mb-3">
             <div className="text-sm font-medium">Category:</div>
             <div className="text-sm text-gray-500">Vegetables</div>
           </div>
 
-          <div className="flex items-start gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-2">
             <div className="text-sm font-medium">Tags:</div>
             <div className="text-sm text-gray-500">
               Vegetables Healthy Chinese Cabbage Green Cabbage
@@ -117,6 +121,7 @@ const ProductPage = () => {
           </div>
         </div>
       </section>
+      
       <section className="w-full my-20">
         <SectionHeader
           title={"Related Products"}
@@ -127,10 +132,7 @@ const ProductPage = () => {
           {products.map((product, index) => (
             <ProductCard
               key={index}
-              image={product.image}
-              price={product.price}
-              rating={product.rating}
-              title={product.title}
+              product={product}
             />
           ))}
         </GridContainer>

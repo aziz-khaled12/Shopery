@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RadioList from "../../ui/other/RadioList";
 
 export default function PaymentMethods() {
-  const [selectedMethod, setSelectedMethod] = useState("cash");
+  const [selectedMethod, setSelectedMethod] = useState("");
 
   const handleChange = (value) => {
-    setSelectedMethod(value);
+    setSelectedMethod(prev => prev === value ? "" : value);
   };
 
   const paymentOptions = [
@@ -18,14 +18,18 @@ export default function PaymentMethods() {
     { id: "amazon", label: "Amazon Pay", checked: selectedMethod === "amazon" },
   ];
 
+  useEffect(() => {
+    console.log(selectedMethod);
+  }, [selectedMethod]);
+
   return (
     <div className="w-full">
-        <h2 className="text-xl font-medium mb-2">Payment Method</h2>
-        <RadioList
-          options={paymentOptions}
-          onChange={handleChange}
-          name="payment"
-        />
+      <h2 className="text-xl font-medium mb-2">Payment Method</h2>
+      <RadioList
+        options={paymentOptions}
+        onChange={handleChange}
+        selected={selectedMethod}
+      />
     </div>
   );
 }

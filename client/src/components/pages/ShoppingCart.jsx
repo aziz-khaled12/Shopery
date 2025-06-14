@@ -1,52 +1,15 @@
-import React, { useState } from "react";
-import { Minus, Plus, CircleX } from "lucide-react";
-import { Button, Divider, Input, RoundedButtonInput } from "../ui";
+import React from "react";
+import { CircleX } from "lucide-react";
+import { Button, Divider, RoundedButtonInput } from "../ui";
 import Counter from "../ui/other/Counter";
 import { useNavigate } from "react-router-dom";
+import useCartStore from "../../store/CartStore";
 
 const ShoppingCart = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      price: 99.99,
-      quantity: 2,
-      image:
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop",
-    },
-    {
-      id: 2,
-      name: "Smart Watch",
-      price: 249.99,
-      quantity: 1,
-      image:
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop",
-    },
-    {
-      id: 3,
-      name: "Laptop Stand",
-      price: 59.99,
-      quantity: 1,
-      image:
-        "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=200&h=200&fit=crop",
-    },
-  ]);
+  const { cart, removeFromCart, updateQuantity } = useCartStore();
 
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
-  };
-
-  const subtotal = cartItems.reduce(
+  const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
@@ -70,7 +33,7 @@ const ShoppingCart = () => {
             </div>
 
             {/* Cart Items */}
-            {cartItems.map((item) => (
+            {cart.map((item) => (
               <div
                 key={item.id}
                 className="p-4 border-b border-[#e6e6e6] last:border-b-0"
@@ -105,7 +68,7 @@ const ShoppingCart = () => {
                     <div className="w-8 h-8 p-0 cursor-pointer flex items-center justify-center">
                       <CircleX
                         className="w-4.5 h-4.5 text-[#999999] hover:text-danger"
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeFromCart(item.id)}
                       />
                     </div>
                   </div>
@@ -127,7 +90,7 @@ const ShoppingCart = () => {
                         <div className="p-0 cursor-pointer flex items-center justify-center">
                           <CircleX
                             className="w-4 h-4 text-[#999999] hover:text-danger"
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeFromCart(item.id)}
                           />
                         </div>
                       </div>

@@ -8,7 +8,7 @@ const RadioList = ({ options, onChange, selected }) => {
           <RadioButton
             key={option.id}
             option={option}
-            checked={selected.includes(option.id)}
+            checked={selected === option.id}
             onChange={onChange}
             name={option.value}
           />

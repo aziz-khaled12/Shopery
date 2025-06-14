@@ -16,6 +16,7 @@ import {
   SlidePanel,
   SectionHeader,
   Divider,
+  Pagination,
 } from "./components/ui";
 import Product from "./features/products/long-product-card";
 import ProductCard from "./features/products/product-card";
@@ -29,6 +30,55 @@ import ShoppingCart1 from "/ShoppingCart1.png";
 import ShoppingCart2 from "/ShoppingCart2.png";
 import CheckoutForm from "./features/forms/CheckoutForm";
 import DualRangeSlider from "./components/ui/inputs/DualRangeSlider";
+
+
+
+const ProductsWithPagination = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9; // 3x3 grid
+  
+  // Mock products data
+  const allProducts = Array.from({ length: 47 }, (_, i) => ({
+    id: i + 1,
+    title: `Product ${i + 1}`,
+    price: `$${(Math.random() * 100 + 10).toFixed(2)}`,
+    rating: (Math.random() * 2 + 3).toFixed(1),
+    image: Apple
+  }));
+
+  const totalPages = Math.ceil(allProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentProducts = allProducts.slice(startIndex, startIndex + itemsPerPage);
+
+  return (
+    <div className="p-6 max-w-6xl mx-auto">
+      {/* Your existing products grid code would go here */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        {currentProducts.map((product) => (
+          <div key={product.id} className="border rounded-lg p-4 bg-white shadow-sm">
+            <div className="aspect-square bg-gray-200 rounded-lg mb-3"></div>
+            <h3 className="font-medium text-gray-900">{product.title}</h3>
+            <p className="text-gray-600">{product.price}</p>
+            <p className="text-sm text-gray-500">⭐ {product.rating}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        className="mt-8"
+      />
+      
+      {/* Optional: Show total results */}
+      <div className="text-center mt-4 text-sm text-gray-600">
+        Showing {startIndex + 1}-{Math.min(startIndex + itemsPerPage, allProducts.length)} of {allProducts.length} products
+      </div>
+    </div>
+  );
+};
 
 function Test() {
   const [open, setOpen] = useState(false);
@@ -308,6 +358,10 @@ function Test() {
           initialMax={1500}
           onChange={(values) => console.log(values)}
         />
+      </div>
+
+      <div>
+      <ProductsWithPagination />
       </div>
     </div>
   );

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 
 const Modal = ({children, open, onClose}) => {
-  console.log("Modal");
-  console.log(open);
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape' && open) {
@@ -36,7 +34,7 @@ const Modal = ({children, open, onClose}) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative mx-4 max-h-[90vh] overflow-auto bg-white rounded-lg shadow-lg p-6">
+      <div className="relative mx-4 max-h-[90vh] overflow-auto bg-white rounded-lg shadow-lg p-6 custom-scrollbar">
         {children}
       </div>
     </div>

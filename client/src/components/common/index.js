@@ -19,3 +19,7 @@ export { default as ImageSlider } from "./products/image-slider";
 
 // filters
 export { default as CategoryFilterItem } from "./filters/CategoryFilterItem";
+export { default as CategoriesFilter } from "./filters/CategoriesFilter";
+export { default as PriceFilter } from "./filters/PriceFilter";
+export { default as RatingFilter } from "./filters/RatingFilter";
+export { default as TagsFilter } from "./filters/TagsFilter";
