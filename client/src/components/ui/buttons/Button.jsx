@@ -32,14 +32,15 @@ const Button = ({
   fullWidth = false,
   grow = false,
   onClick,
-  className=""
+  className="",
+  disabled = false
 }) => {
   return (
     <div
-      onClick={onClick}
+      onClick={disabled ? null : onClick}
       className={`rounded-full 
         ${fullWidth ? "w-full" : grow ? "flex-grow" : "w-fit"}
-        cursor-pointer text-center font-semibold transition-all duration-200 
+        ${disabled ? "cursor-default" : "cursor-pointer"} text-center font-semibold transition-all duration-200 
         ${responsiveSizeClasses(size)} 
                 ${
             variant === "white"

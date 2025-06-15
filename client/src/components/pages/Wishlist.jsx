@@ -1,38 +1,12 @@
 import React from "react";
 import { Button } from "../ui";
 import { CircleX } from "lucide-react";
+import useWishlistStore from "../../store/wishlistStore";
 
 const Wishlist = () => {
-  const wishlistItems = [
-    {
-      id: 1,
-      name: "Premium Wireless Headphones",
-      price: 149.99,
-      image: "https://via.placeholder.com/80x80/6366f1/ffffff?text=HP",
-      inStock: true,
-    },
-    {
-      id: 2,
-      name: "Smart Fitness Watch",
-      price: 299.99,
-      image: "https://via.placeholder.com/80x80/10b981/ffffff?text=SW",
-      inStock: true,
-    },
-    {
-      id: 3,
-      name: "Bluetooth Speaker",
-      price: 79.99,
-      image: "https://via.placeholder.com/80x80/f59e0b/ffffff?text=SP",
-      inStock: false,
-    },
-    {
-      id: 4,
-      name: "Laptop Stand",
-      price: 49.99,
-      image: "https://via.placeholder.com/80x80/ef4444/ffffff?text=LS",
-      inStock: true,
-    },
-  ];
+  const { wishlist } = useWishlistStore();
+  
+  
 
   return (
     <div className="w-full px-6 sm:px-8 lg:px-12 py-6">
@@ -68,7 +42,7 @@ const Wishlist = () => {
 
           {/* Items */}
           <div className="divide-y divide-gray-200">
-            {wishlistItems.map((item, index) => (
+            {wishlist.map((item, index) => (
               <div
                 key={index}
                 className="p-6 hover:bg-gray-50 transition-colors"
@@ -91,8 +65,8 @@ const Wishlist = () => {
                       <span
                         className={`inline-flex items-center px-2 py-1 rounded-sm text-sm font-medium mt-2 ${
                           item.inStock
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-green-100 text-primary"
+                            : "bg-red-100 text-danger"
                         }`}
                       >
                         {item.inStock ? "In Stock" : "Out of Stock"}
@@ -133,8 +107,8 @@ const Wishlist = () => {
                     <span
                       className={`inline-flex items-center px-2 py-1 rounded-sm text-sm font-medium ${
                         item.inStock
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
+                          ? "bg-green-100 text-primary"
+                          : "bg-red-100 text-danger"
                       }`}
                     >
                       {item.inStock ? "In Stock" : "Out of Stock"}
@@ -155,7 +129,7 @@ const Wishlist = () => {
             ))}
           </div>
 
-          {wishlistItems.length === 0 && (
+          {wishlist.length === 0 && (
             <div className="text-center py-12">
               <div className="text-gray-400 mb-4">
                 <svg

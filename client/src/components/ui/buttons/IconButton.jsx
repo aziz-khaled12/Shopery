@@ -2,7 +2,7 @@ import React from "react";
 
 const sizeClassesMap = {
   small: "px-6 py-2.5 gap-2 text-2xs",
-  medium: "sm:text-sm sm:px-8 sm:py-3 gap-3 text-xs px-4 py-2",
+  medium: "sm:text-sm sm:px-8 gap-3 text-xs px-4 py-3",
   large: "text-base px-10 gap-4 py-4",
 };
 
@@ -36,6 +36,7 @@ const IconButton = ({
   start = false,
   end = false,
   onClick,
+  className = ""
 }) => {
   if (start && end) {
     throw new Error("IconButton: Only one of 'start' or 'end' can be true.");
@@ -46,7 +47,7 @@ const IconButton = ({
 
   return (
     <div
-      className={`rounded-full 
+      className={`rounded-full ${className}
         ${fullWidth ? "w-full" : grow ? "flex-grow" : "w-fit"}
         cursor-pointer flex items-center justify-center font-semibold transition-all duration-200 
         ${

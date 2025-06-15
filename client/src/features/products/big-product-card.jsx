@@ -7,7 +7,7 @@ import {
   Countdown,
 } from "../../components/ui";
 import { Eye, Heart } from "lucide-react";
-import useCartStore from "../../store/CartStore";
+import useCartStore from "../../store/cartStore";
 
 const BigProductCard = ({ product }) => {
 

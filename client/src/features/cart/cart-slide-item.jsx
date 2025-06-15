@@ -2,7 +2,7 @@ import React from "react";
 import { CircleX } from "lucide-react";
 import ShoppingCart1 from "/ShoppingCart1.png";
 import ShoppingCart2 from "/ShoppingCart2.png";
-import useCartStore from "../../store/CartStore";
+import useCartStore from "../../store/cartStore";
 
 const CartSlideItem = ({ item }) => {
   const { removeFromCart } = useCartStore();

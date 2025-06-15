@@ -3,14 +3,26 @@ import { CardTag, IconButton2, StarRating } from "../../components/ui";
 import { useNavigate } from "react-router-dom";
 import { Eye, Heart, ShoppingCart } from "lucide-react";
 import { useProductModalStore } from "../../store/productModalStore";
-import useCartStore from "../../store/CartStore";
+import useCartStore from "../../store/cartStore";
+import useWishlistStore from "../../store/wishlistStore";
 
 const ProductCard = ({ product, className }) => {
 
   const { addToCart } = useCartStore();
   const { openProductModal } = useProductModalStore();
+  const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlistStore();
   const discountPrice = product.price - (product.price * product.discount) / 100;
   const navigate = useNavigate();
+
+  const handleWishlist = (e) => {
+    e.stopPropagation();
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product.id);
+    }
+  }
+
   return (
     <div
       className={`${className} group border bg-white border-gray-200 transition-all duration-200 hover:z-10 hover:border-primary hover:shadow-hover-primary w-full p-2 sm:p-3 cursor-pointer ${className}`}
@@ -24,8 +36,9 @@ const ProductCard = ({ product, className }) => {
         )}
         <div className="absolute top-0 right-0 flex items-center gap-1 sm:gap-2 flex-col transition-all duration-200 opacity-0 invisible translate-y-6 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 mt-1 sm:mt-2 z-10">
           <IconButton2
-            icon={<Heart className="h-5 w-5" />}
+            icon={isInWishlist(product.id) ? <Heart className="h-5 w-5 fill-red-500 stroke-red-500" /> : <Heart className="h-5 w-5" />}
             className="text-xs sm:text-base"
+            onClick={handleWishlist}
           />
           <IconButton2
             icon={<Eye className="h-5 w-5" />}

@@ -1,7 +1,7 @@
 import React from "react";
 import { IconButton2, StarRating } from "../../components/ui";
 import { Eye, Heart, ShoppingCart } from "lucide-react";
-import useCartStore from "../../store/CartStore";
+import useCartStore from "../../store/cartStore";
 
 const Product = ({ product }) => {
 

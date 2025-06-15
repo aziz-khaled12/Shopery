@@ -52,13 +52,13 @@ const Pagination = ({
   const handlePageClick = (page) => {
     if (page !== "..." && page !== currentPage && onPageChange) {
       onPageChange(page);
-      window.scrollTo({ top: 300, behavior: "smooth" });
     }
   };
 
   const handlePrevious = () => {
     if (currentPage > 1 && onPageChange) {
       onPageChange(currentPage - 1);
+
     }
   };
 

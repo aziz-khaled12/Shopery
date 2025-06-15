@@ -12,6 +12,8 @@ import ShoppingCart from "./components/pages/ShoppingCart";
 import Checkout from "./components/pages/Checkout";
 import ProductModal from "./components/modals/ProductModal";
 import Category from "./components/pages/Category";
+import Blog from "./components/pages/Blogs";
+import About from "./components/pages/About";
 
 const App = () => {
 
@@ -43,9 +45,12 @@ const App = () => {
         <Route path="cart" element={<ShoppingCart />}></Route>
         <Route path="checkout" element={<Checkout />}></Route>
         <Route path="categories/:category" element={<Category />}></Route>
+        <Route path="blog" element={<Blog />}></Route>
+        <Route path="about" element={<About />}></Route>
       </Routes>
       <ProductModal />
       <Footer />
+
     </div>
   );
 };

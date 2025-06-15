@@ -5,18 +5,11 @@ import { IconButton2 } from "../../ui";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { homeBlogs } from "../../../consts/BlogsConsts";
 const LatestNews = () => {
+
   const swiperRef = useRef(null);
 
-  const news = Array(3).fill({
-    date: new Date(),
-    title:
-      "Curabitur porttitor orci eget neque accumsan venenatis. Nunc fermentum.",
-    tag: "Food",
-    creator: "Admin",
-    image: NewsImage1,
-    comments: 65,
-  });
   return (
     <div className="w-full sm:px-page px-6 my-[60px]">
       <div className="w-full justify-between items-center flex mb-8">
@@ -54,18 +47,10 @@ const LatestNews = () => {
           swiperRef.current = swiper;
         }}
       >
-        {news.map((news, index) => {
+        {homeBlogs.map((blog, index) => {
           return (
             <SwiperSlide key={index}>
-              <NewsCard
-                key={index}
-                comments={news.comments}
-                creator={news.creator}
-                date={news.date}
-                image={news.image}
-                tag={news.tag}
-                title={news.title}
-              ></NewsCard>
+              <NewsCard key={index} blog={blog} />
             </SwiperSlide>
           );
         })}

@@ -167,7 +167,7 @@ const ShoppingCart = () => {
                 </div>
               </div>
 
-              <Button onClick={() => navigate("/checkout")} className="w-full bg-[#00b207] hover:bg-[#008a05] text-white py-3">
+              <Button disabled={cart.length === 0} fullWidth onClick={() => navigate("/checkout")} variant={cart.length === 0 ? "disabled" : "fill"}>
                 Proceed to checkout
               </Button>
             </div>
