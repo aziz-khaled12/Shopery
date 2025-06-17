@@ -11,7 +11,7 @@ import Cooking from "/Cooking.png";
 import DiabeticFood from "/DiabeticFood.png";
 import DishDetergents from "/DishDetergents.png";
 import Oil from "/Oil.png";
-import CategoryCard from "../../../features/categories/category-card";
+import { CategoryCard } from "../../../features";
 import { GridContainer, SectionHeader } from "../../ui";
 
 const PopularCategories = () => {

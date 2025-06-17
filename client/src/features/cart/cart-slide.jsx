@@ -1,10 +1,8 @@
 import React from "react";
-import ShoppingCart1 from "/ShoppingCart1.png";
-import ShoppingCart2 from "/ShoppingCart2.png";
 import CartSlideItem from "./cart-slide-item";
 import { Divider, SlidePanel } from "../../components/ui";
 import { useNavigate } from "react-router-dom";
-import useCartStore from "../../store/cartStore";
+import useCartStore from "../../store/CartStore";
 
 const CartSlide = ({ open, handleClose }) => {
   const navigate = useNavigate();

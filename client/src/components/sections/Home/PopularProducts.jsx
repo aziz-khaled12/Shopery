@@ -1,6 +1,6 @@
 import React from "react";
 import Apple from "/Apple.png";
-import ProductCard from "../../../features/products/product-card";
+import { ProductCard } from "../../../features";
 import { GridContainer, SectionHeader } from "../../ui";
 import { products } from "../../../consts/ProductsConsts";
 

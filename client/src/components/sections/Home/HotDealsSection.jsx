@@ -1,8 +1,7 @@
 import React from "react";
 import BigApple from "/BigApple.png";
 import Apple from "/Apple.png";
-import BigProductCard from "../../../features/products/big-product-card";
-import ProductCard from "../../../features/products/product-card";
+import { BigProductCard, ProductCard } from "../../../features";
 import { GridContainer, SectionHeader } from "../../ui";
 import { bigProduct, products } from "../../../consts/ProductsConsts";
 

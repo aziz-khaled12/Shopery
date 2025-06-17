@@ -3,39 +3,39 @@ import BigCabbage from "/BigCabbage.png";
 import SliderImage1 from "/SliderImage1.png";
 import SliderImage2 from "/SliderImage2.png";
 import SliderImage3 from "/SliderImage3.png";
-
-import { Divider, IconButton, IconButton2, Modal } from "../ui";
 import {
-  Facebook,
-  Heart,
-  Instagram,
   ShoppingCart,
+  ChevronDown,
+  ChevronUp,
+  Heart,
+  Minus,
+  Plus,
   Star,
+  Facebook,
+  Instagram,
   Twitter,
 } from "lucide-react";
-import { useProductModalStore } from "../../store/productModalStore";
-import Counter from "../ui/other/Counter";
-import { ImageSlider } from "../ui";
-import useCartStore from "../../store/cartStore";
-import { modalProduct } from "../../consts/ProductsConsts";
+import { GridContainer, IconButton, IconButton2, SectionHeader } from "../components/ui";
+import Apple from "/Apple.png";
+import ProductCard from "../features/products/product-card";
+import { ImageSlider } from "../components/ui";
+import Counter from "../components/ui/other/Counter";
+import { products } from "../consts/ProductsConsts";
 
-const ProductModal = ({ product = modalProduct }) => {
-  const { isOpen, closeProductModal } = useProductModalStore();
+const ProductPage = () => {
   const [count, setCount] = useState(0);
-  const { addToCart } = useCartStore();
+  const images = [BigCabbage, SliderImage1, SliderImage2, SliderImage3];
 
   return (
-    <Modal open={isOpen} onClose={() => closeProductModal()}>
-      <section className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl 2xl:min-w-7xl">
+    <div className="w-full sm:px-page px-6">
+      <section className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl">
         <div className="w-full lg:w-1/2">
-          <ImageSlider images={product.images} />
+          <ImageSlider images={images} />
         </div>
 
         <div className="w-full lg:w-1/2">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
-            <h1 className="text-2xl sm:text-3xl font-semibold">
-              {product.title}
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-semibold">Chinese Cabbage</h1>
             <div className="text-sm rounded-sm text-primary px-2 py-1 bg-primary/10 w-fit">
               In Stock
             </div>
@@ -60,22 +60,20 @@ const ProductModal = ({ product = modalProduct }) => {
               SKU: <span className="text-gray-500 font-normal">2,51,594</span>
             </div>
           </div>
-
+          
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
             <div className="gap-1 flex items-center">
-              <span className="line-through text-lg sm:text-xl text-gray-300">
-                ${product.price}
-              </span>
-              <span className="text-xl sm:text-2xl font-medium text-hard-primary">
-                ${product.discount}
+              <span className="line-through text-lg sm:text-xl text-gray-300">$48.00</span>
+              <span className="line-through text-xl sm:text-2xl font-medium text-hard-primary">
+                $17.28
               </span>
             </div>
             <div className="text-sm rounded-full text-danger px-3 py-1 bg-danger/10 font-medium w-fit">
-              {product.discount}% Off
+              64% Off
             </div>
           </div>
 
-          <Divider />
+          <div className="w-full h-0.5 bg-gray-200"></div>
 
           <div className="w-full my-6">
             <div className="flex items-center justify-between gap-4">
@@ -90,46 +88,57 @@ const ProductModal = ({ product = modalProduct }) => {
                 <IconButton2 icon={<Instagram />} />
               </div>
             </div>
-            <p className="text-sm text-gray-400 mt-4">{product.description}</p>
+            <p className="text-sm text-gray-400 mt-4">
+              Class aptent taciti sociosqu ad litora torquent per conubia
+              nostra, per inceptos himenaeos. Nulla nibh diam, blandit vel
+              consequat nec, ultrices et ipsum. Nulla varius magna a consequat
+              pulvinar.
+            </p>
           </div>
 
-          <Divider />
+          <div className="w-full h-0.5 bg-gray-200"></div>
 
           <div className="flex items-center py-4 gap-3">
             <Counter count={count} setCount={setCount} />
-            <IconButton
-              end
-              grow
-              icon={
-                <ShoppingCart
-                  onClick={() => {
-                    addToCart({ ...product, quantity: count });
-                  }}
-                />
-              }
-            >
+            <IconButton end grow icon={<ShoppingCart />}>
               Add to Cart
             </IconButton>
             <IconButton2 icon={<Heart />} />
           </div>
-
-          <Divider />
+          
+          <div className="w-full h-0.5 bg-gray-200"></div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-6 mb-3">
             <div className="text-sm font-medium">Category:</div>
-            <div className="text-sm text-gray-500">{product.category}</div>
+            <div className="text-sm text-gray-500">Vegetables</div>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-start gap-2">
             <div className="text-sm font-medium">Tags:</div>
             <div className="text-sm text-gray-500">
-              {product.tags.map((tag) => tag).join(", ")}
+              Vegetables Healthy Chinese Cabbage Green Cabbage
             </div>
           </div>
         </div>
       </section>
-    </Modal>
+      
+      <section className="w-full my-20">
+        <SectionHeader
+          title={"Related Products"}
+          viewAll={false}
+          alignment="center"
+        />
+        <GridContainer>
+          {products.map((product, index) => (
+            <ProductCard
+              key={index}
+              product={product}
+            />
+          ))}
+        </GridContainer>
+      </section>
+    </div>
   );
 };
 
-export default ProductModal;
+export default ProductPage;

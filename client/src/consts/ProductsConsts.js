@@ -12,6 +12,7 @@ export const products = Array(11).fill().map(() => ({
   image: Apple,
   averageRating: 4,
   ratingCount: 100,
+  inStock: true,
   unit: "kg",
 }));
 
@@ -23,6 +24,7 @@ export const bigProduct = {
   discount: 50,
   averageRating: 4,
   ratingCount: 100,
+  inStock: true,
   unit: "kg",
 };
 
