@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import NewsImage1 from "/NewsImage1.png";
-import { NewsCard } from "../../common";
+import { NewsCard } from "../../../features";
 import { IconButton2 } from "../../ui";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";

@@ -4,7 +4,7 @@ import {
   SearchBar,
   NavMenu,
   NavBreadcrumbs,
-} from "../common";
+} from "../sections/Navbar";
 import { useLocation } from "react-router-dom";
 
 const Navbar = () => {

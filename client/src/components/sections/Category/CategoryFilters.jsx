@@ -4,7 +4,7 @@ import {
   PriceFilter,
   RatingFilter,
   TagsFilter,
-} from "../../common";
+} from "../../../features";
 import { Divider } from "../../ui";
 
 const CategoryFilters = () => {

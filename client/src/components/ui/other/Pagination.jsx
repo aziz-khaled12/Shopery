@@ -58,7 +58,6 @@ const Pagination = ({
   const handlePrevious = () => {
     if (currentPage > 1 && onPageChange) {
       onPageChange(currentPage - 1);
-
     }
   };
 

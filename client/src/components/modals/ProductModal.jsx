@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { useProductModalStore } from "../../store/productModalStore";
 import Counter from "../ui/other/Counter";
-import { ImageSlider } from "../common";
+import { ImageSlider } from "../ui";
 import useCartStore from "../../store/cartStore";
 import { modalProduct } from "../../consts/ProductsConsts";
 

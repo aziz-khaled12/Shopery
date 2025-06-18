@@ -49,7 +49,7 @@ const IconButton = ({
     <div
       className={`rounded-full ${className}
         ${fullWidth ? "w-full" : grow ? "flex-grow" : "w-fit"}
-        cursor-pointer flex items-center justify-center font-semibold transition-all duration-200 
+        cursor-pointer h-fit flex items-center justify-center font-semibold transition-all duration-200 
         ${
           fillWhite
             ? "bg-white text-primary hover:bg-gray-200"
