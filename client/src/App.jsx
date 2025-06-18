@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import OrderHistory from "./pages/OrderHistory";
 import Settings from "./pages/Settings";
+import AddBlog from "./pages/AddBlog";
 
 const App = () => {
 
@@ -48,6 +49,7 @@ const App = () => {
         <Route path="categories/:category" element={<Category />} />
         <Route path="blogs" element={<Blogs />} />
         <Route path="about" element={<About />} />
+        <Route path="blog" element={<AddBlog />} />
       </Routes>
       <ProductModal />
       <Footer />
