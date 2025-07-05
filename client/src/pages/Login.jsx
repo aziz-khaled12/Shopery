@@ -5,7 +5,7 @@ import { Button, Input } from "../components/ui";
 const Login = () => {
   const navigate = useNavigate();
   return (
-    <div className="w-full py-20 flex items-center p-6 sm:px-page justify-center ">
+    <div className="w-full flex items-center p-6 sm:px-page justify-center ">
       <div className="flex flex-col items-center p-6 pb-8 shadow-gray w-full max-w-[520px] bg-white/20 rounded-lg">
         <h1 className="text-black/90 text-3xl font-semibold mb-5">
           Sign In

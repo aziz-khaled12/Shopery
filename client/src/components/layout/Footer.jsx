@@ -48,7 +48,7 @@ const Footer = () => {
   );
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-20">
       <NewsLetter />
 
       <footer className="bg-black text-white py-8 px-4 sm:px-6 lg:px-8">

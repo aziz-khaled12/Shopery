@@ -15,7 +15,7 @@ const Textarea = ({
       placeholder={placeholder}
       disabled={disabled}
       rows={rows}
-      className={`w-full p-3 border-green-gray-100 border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary hover:border-primary transition-all duration-200 resize-none ${
+      className={`w-full p-3 border-green-gray-100 border-2 rounded-md focus:outline-none focus:border-primary hover:border-primary transition-all duration-200 resize-none ${
         disabled && "cursor-not-allowed"
       } ${className}`}
     />

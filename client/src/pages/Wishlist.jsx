@@ -5,14 +5,14 @@ import useWishlistStore from "../store/wishlistStore";
 import useProductsStore from "../store/productsStore";
 import useCartStore from "../store/cartStore";
 
-const Wishlist = ({withTitle = true}) => {
+const Wishlist = ({ withTitle = true }) => {
   const { wishlist } = useWishlistStore();
   const { addToCart } = useCartStore();
   const { getProducts } = useProductsStore();
   const products = getProducts(wishlist.map((item) => item));
 
   return (
-    <div className={`w-full  ${withTitle ? "px-6 sm:px-8 py-6 lg:px-12" : "p-0"}`}>
+    <div className={`w-full  ${withTitle ? "px-6 sm:px-page" : "p-0"}`}>
       <div className="max-w-6xl mx-auto">
         {withTitle && (
           <h1 className="text-3xl font-semibold mb-6 text-gray-900 w-full text-center">
@@ -50,19 +50,19 @@ const Wishlist = ({withTitle = true}) => {
             {products.map((item, index) => (
               <div
                 key={index}
-                className="p-6 hover:bg-gray-50 transition-colors"
+                className="px-6 hover:bg-gray-50 transition-colors"
               >
                 {/* Mobile Layout */}
                 <div className="md:hidden space-y-4">
                   <div className="flex items-start gap-4">
                     <img
                       src={item.image}
-                      alt={item.name}
+                      alt={item.title}
                       className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium text-gray-900 truncate">
-                        {item.name}
+                        {item.title}
                       </h3>
                       <p className="text-lg font-semibold text-gray-900 mt-1">
                         ${item.price}
@@ -79,7 +79,12 @@ const Wishlist = ({withTitle = true}) => {
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <Button variant="fill" size="small" fullWidth onClick={() => addToCart(item)}>
+                    <Button
+                      variant="fill"
+                      size="small"
+                      fullWidth
+                      onClick={() => addToCart(item)}
+                    >
                       Add to Cart
                     </Button>
                     <button className="px-4 py-2 cursor-pointer rounded-md text-sm font-medium text-red-600 border border-red-200 hover:bg-red-50 transition-colors">
@@ -93,18 +98,30 @@ const Wishlist = ({withTitle = true}) => {
                   <div className="col-span-6 flex items-center gap-4">
                     <img
                       src={item.image}
-                      alt={item.name}
+                      alt={item.title}
                       className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
                     />
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-gray-900 truncate">{item.name}</h3>
+                      <h3 className="text-gray-900 truncate">{item.title}</h3>
                     </div>
                   </div>
 
-                  <div className="col-span-2">
-                    <span className="text-gray-900">
+                  <div className="col-span-2 font-medium">
+                    <span
+                      className={` ${
+                        item.discount.isActive ? "line-through text-gray-500" : "text-gray-900"
+                      }`}
+                    >
                       ${item.price}{" "}
-                      <span>{item.discount ? `$${item.discount}` : ""}</span>
+                    </span>
+                    <span
+                      className={`${
+                        item.discount.isActive ? "text-primary" : "text-gray-500"
+                      }`}
+                    >
+                      {item.discount.isActive
+                        ? `$${item.price - (item.price * item.discount.percentage) / 100}`
+                        : ""}
                     </span>
                   </div>
 

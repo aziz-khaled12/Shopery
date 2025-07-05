@@ -22,7 +22,7 @@ const DataWithFilters = ({ data, type = "products" }) => {
   const currentData = data.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="w-full px-6 sm:px-page pb-20 space-y-6">
+    <div className="w-full px-6 sm:px-page space-y-6">
       {/* Header with filters toggle, sort, and count */}
       <div className="flex flex-row items-center justify-between gap-4">
         <div className="">

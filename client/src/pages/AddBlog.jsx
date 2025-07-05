@@ -45,7 +45,7 @@ const AddBlog = () => {
   };
 
   return (
-    <div className="min-h-screen px-6 sm:px-page pb-20 pt-10">
+    <div className="min-h-screen px-6 sm:px-page">
       {/* Header */}
       <header className="flex flex-col md:flex-row justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">

@@ -12,11 +12,11 @@ const ShoppingCart = ({withTitle = true}) => {
 
   const subtotal =
     cart.length > 0
-      ? cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+      ? cart.reduce((sum, item) => sum + (item.discount.isActive ? item.discount.price : item.price) * item.quantity, 0)
       : 0;
 
   return (
-    <main className={`w-full  ${withTitle ? "py-8 md:py-12 mx-auto px-4" : "p-0"}`}>
+    <main className={`w-full  ${withTitle ? "mx-auto px-6 sm:px-page" : "p-0"}`}>
       {withTitle && (
         <h1 className="text-2xl md:text-3xl font-semibold text-[#1a1a1a] mb-6 md:mb-8 text-center">
           My Shopping Cart
@@ -46,15 +46,15 @@ const ShoppingCart = ({withTitle = true}) => {
                   <div className="col-span-5 flex items-center gap-3">
                     <img
                       src={item.image}
-                      alt={item.name}
+                      alt={item.title}
                       className="w-16 h-16 object-cover rounded"
                     />
                     <span className="text-[#1a1a1a] font-medium">
-                      {item.name}
+                      {item.title}
                     </span>
                   </div>
                   <div className="col-span-2 text-[#1a1a1a] font-semibold">
-                    ${item.price.toFixed(2)}
+                    ${item.discount.isActive ? item.discount.price.toFixed(2) : item.price.toFixed(2)}
                   </div>
                   <div className="col-span-3">
                     <div className="max-w-[130px]">
@@ -67,7 +67,7 @@ const ShoppingCart = ({withTitle = true}) => {
                     </div>
                   </div>
                   <div className="col-span-1 text-[#1a1a1a] font-semibold">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    ${(item.discount.isActive ? item.discount.price : item.price) * item.quantity}
                   </div>
                   <div className="col-span-1">
                     <div className="w-8 h-8 p-0 cursor-pointer flex items-center justify-center">
@@ -84,13 +84,13 @@ const ShoppingCart = ({withTitle = true}) => {
                   <div className="flex gap-4">
                     <img
                       src={item.image}
-                      alt={item.name}
+                      alt={item.title}
                       className="w-20 h-20 object-cover rounded flex-shrink-0"
                     />
                     <div className="flex-grow">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="text-[#1a1a1a] font-medium text-sm">
-                          {item.name}
+                          {item.title}
                         </h3>
                         <div className="p-0 cursor-pointer flex items-center justify-center">
                           <CircleX
@@ -100,7 +100,7 @@ const ShoppingCart = ({withTitle = true}) => {
                         </div>
                       </div>
                       <div className="text-sm text-[#4d4d4d] mb-2">
-                        ${item.price.toFixed(2)} each
+                        ${item.discount.isActive ? item.discount.price.toFixed(2) : item.price.toFixed(2)} each
                       </div>
                       <div className="flex items-center justify-between">
                         <Counter
@@ -110,7 +110,7 @@ const ShoppingCart = ({withTitle = true}) => {
                           }
                         />
                         <div className="text-[#1a1a1a] font-semibold">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          ${(item.discount.isActive ? item.discount.price : item.price) * item.quantity}
                         </div>
                       </div>
                     </div>

@@ -14,7 +14,7 @@ const Checkout = () => {
   const total = subtotal + 10;
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 sm:p-6 lg:px-page min-h-screen">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 px-6 sm:px-page min-h-screen">
       {/* Checkout Form - Full width on mobile, 8 columns on desktop */}
       <div className="lg:col-span-8">
         <CheckoutForm />

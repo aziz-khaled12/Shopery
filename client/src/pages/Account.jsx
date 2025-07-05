@@ -11,7 +11,7 @@ const Account = () => {
     navigate(item.path);
   };
   return (
-    <div className="flex flex-col lg:flex-row gap-6 px-4 sm:px-6 lg:px-page w-full py-8 sm:py-12 lg:py-20">
+    <div className="flex flex-col lg:flex-row gap-6 px-4 sm:px-6 lg:px-page w-full">
       {/* nav panel - mobile first hidden, shown on lg */}
       <div className="lg:block border border-gray-200 rounded-lg w-full lg:w-1/5 h-fit mb-6 lg:mb-0">
         <h1 className="pl-5 py-4 font-medium text-xl">Navigation</h1>

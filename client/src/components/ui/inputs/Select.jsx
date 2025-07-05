@@ -34,7 +34,9 @@ const Select = ({
     variant === "minimal"
       ? `py-2.5 px-3 ${disabled ? "opacity-60" : "hover:text-primary"}`
       : `py-2.5 px-3 border-2 border-green-gray-100 transition-all duration-200 rounded-md bg-white w-full ${
-          disabled ? "bg-gray-100 cursor-not-allowed" : "hover:border-primary"
+          disabled
+            ? "bg-gray-100 cursor-not-allowed"
+            : `hover:border-primary${isOpen ? " border-primary" : ""}`
         }`;
 
   return (

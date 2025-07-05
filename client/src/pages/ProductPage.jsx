@@ -15,61 +15,74 @@ import {
   Instagram,
   Twitter,
 } from "lucide-react";
-import { GridContainer, IconButton, IconButton2, SectionHeader } from "../components/ui";
+import {
+  GridContainer,
+  IconButton,
+  IconButton2,
+  SectionHeader,
+  StarRating,
+} from "../components/ui";
 import Apple from "/Apple.png";
 import ProductCard from "../features/products/product-card";
 import { ImageSlider } from "../components/ui";
 import Counter from "../components/ui/other/Counter";
 import { products } from "../consts/ProductsConsts";
+import { useParams } from "react-router-dom";
 
 const ProductPage = () => {
   const [count, setCount] = useState(0);
-  const images = [BigCabbage, SliderImage1, SliderImage2, SliderImage3];
+  const { productId } = useParams();
+  const product = products.find((product) => product.id === productId);
+
 
   return (
     <div className="w-full sm:px-page px-6">
       <section className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl">
         <div className="w-full lg:w-1/2">
-          <ImageSlider images={images} />
+          <ImageSlider images={product.images} />
         </div>
 
         <div className="w-full lg:w-1/2">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
-            <h1 className="text-2xl sm:text-3xl font-semibold">Chinese Cabbage</h1>
-            <div className="text-sm rounded-sm text-primary px-2 py-1 bg-primary/10 w-fit">
-              In Stock
+            <h1 className="text-2xl sm:text-3xl font-semibold">
+              {product.title}
+            </h1>
+            <div
+              className={`text-sm rounded-sm px-2 py-1 w-fit ${
+                product.inStock
+                  ? "bg-primary/10 text-primary"
+                  : "bg-danger/10 text-danger"
+              }`}
+            >
+              {product.inStock ? "In Stock" : "Out of Stock"}
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row w-full sm:items-center gap-4 sm:gap-7 mb-5">
             <div className="flex items-center gap-1.5">
               <div className="flex gap-0.5">
-                {Array.from({ length: 5 }, (_, index) => index + 1).map(
-                  (item) => (
-                    <Star
-                      key={item}
-                      className="text-warning fill-warning h-4 w-4 lg:h-4.5 lg:w-4.5"
-                    />
-                  )
-                )}
+                <StarRating rating={product.averageRating} />
               </div>
-              <p className="text-sm text-gray-500">4 Reviews</p>
-            </div>
-
-            <div className="text-sm text-gray-700 font-medium">
-              SKU: <span className="text-gray-500 font-normal">2,51,594</span>
+              <p className="text-sm text-gray-500">
+                {product.ratingCount} Reviews
+              </p>
             </div>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
             <div className="gap-1 flex items-center">
-              <span className="line-through text-lg sm:text-xl text-gray-300">$48.00</span>
-              <span className="line-through text-xl sm:text-2xl font-medium text-hard-primary">
-                $17.28
+              <span className="line-through text-lg sm:text-xl text-gray-300">
+                ${product.price.toFixed(2)}
               </span>
+              {product?.discount?.isActive && (
+                <span className="text-xl sm:text-2xl font-medium text-hard-primary">
+                  ${product.discount.price.toFixed(2)}
+                </span>
+              )}
             </div>
             <div className="text-sm rounded-full text-danger px-3 py-1 bg-danger/10 font-medium w-fit">
-              64% Off
+              {product?.discount?.isActive &&
+                `${product.discount.percentage}% Off`}
             </div>
           </div>
 
@@ -79,7 +92,9 @@ const ProductPage = () => {
             <div className="flex items-center justify-between gap-4">
               <div className="text-sm">
                 Brand:{" "}
-                <span className="text-hard-primary font-medium">Organic</span>
+                <span className="text-hard-primary font-medium">
+                  {product.brand}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm">Share Item: </span>
@@ -88,12 +103,7 @@ const ProductPage = () => {
                 <IconButton2 icon={<Instagram />} />
               </div>
             </div>
-            <p className="text-sm text-gray-400 mt-4">
-              Class aptent taciti sociosqu ad litora torquent per conubia
-              nostra, per inceptos himenaeos. Nulla nibh diam, blandit vel
-              consequat nec, ultrices et ipsum. Nulla varius magna a consequat
-              pulvinar.
-            </p>
+            <p className="text-sm text-gray-400 mt-4">{product.description}</p>
           </div>
 
           <div className="w-full h-0.5 bg-gray-200"></div>
@@ -105,23 +115,23 @@ const ProductPage = () => {
             </IconButton>
             <IconButton2 icon={<Heart />} />
           </div>
-          
+
           <div className="w-full h-0.5 bg-gray-200"></div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-6 mb-3">
             <div className="text-sm font-medium">Category:</div>
-            <div className="text-sm text-gray-500">Vegetables</div>
+            <div className="text-sm text-gray-500">{product.category}</div>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-start gap-2">
             <div className="text-sm font-medium">Tags:</div>
             <div className="text-sm text-gray-500">
-              Vegetables Healthy Chinese Cabbage Green Cabbage
+              {product.tags.map((tag) => tag).join(", ")}
             </div>
           </div>
         </div>
       </section>
-      
+
       <section className="w-full my-20">
         <SectionHeader
           title={"Related Products"}
@@ -130,10 +140,7 @@ const ProductPage = () => {
         />
         <GridContainer>
           {products.map((product, index) => (
-            <ProductCard
-              key={index}
-              product={product}
-            />
+            <ProductCard key={index} product={product} />
           ))}
         </GridContainer>
       </section>

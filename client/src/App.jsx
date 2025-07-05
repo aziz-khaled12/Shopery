@@ -9,6 +9,8 @@ import Account from "./pages/Account";
 import OrderHistory from "./pages/OrderHistory";
 import Settings from "./pages/Settings";
 import AddBlog from "./pages/AddBlog";
+import AddProduct from "./pages/AddProduct";
+import Error from "./pages/Error";
 
 const App = () => {
 
@@ -39,17 +41,19 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route
-          path="categories/vegetables/chinese cabbage"
+          path="categories/:category/:productId"
           element={<ProductPage />}
         />
         <Route path="test" element={<Test />} />
         <Route path="wishlist" element={<Wishlist />} />
-        <Route path="cart" element={<ShoppingCart />} />
+        <Route path="cart" element={<ShoppingCart withTitle={true} />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="categories/:category" element={<Category />} />
         <Route path="blogs" element={<Blogs />} />
         <Route path="about" element={<About />} />
         <Route path="blog" element={<AddBlog />} />
+        <Route path="product" element={<AddProduct />} />
+        <Route path="*" element={<Error />} />
       </Routes>
       <ProductModal />
       <Footer />

@@ -12,13 +12,12 @@ import useCartStore from "../../store/cartStore";
 const BigProductCard = ({ product }) => {
 
 
-  const discountPrice = product.price - (product.price * product.discount) / 100;
   const { addToCart } = useCartStore();
   return (
     <div className="w-full h-full border bg-white border-gray-200 group hover:border-primary hover:shadow-hover-primary p-4 sm:p-6">
       <div className="relative w-full">
         <div className="flex absolute top-4 left-4 gap-2 sm:top-6 sm:left-6">
-          <CardTag color="red">sale {product.discount}%</CardTag>
+          <CardTag color="red">sale {product.discount.percentage}%</CardTag>
           <CardTag color="blue">new</CardTag>
         </div>
         <img
@@ -40,10 +39,12 @@ const BigProductCard = ({ product }) => {
             {product.title}
           </h1>
           <div className="text-lg sm:text-2xl font-medium flex items-center gap-1">
-            <p>${discountPrice.toFixed(2)}</p>{" "}
-            <span className="line-through text-gray-300">
-              ${product.price.toFixed(2)}
-            </span>
+            <p>${product.discount.isActive ? product.discount.price.toFixed(2) : product.price.toFixed(2)}</p>{" "}
+            {product.discount.isActive && (
+              <span className="line-through text-gray-300">
+                ${product.price.toFixed(2)}
+              </span>
+            )}
           </div>
           <div className="flex gap-1 items-center">
             <StarRating rating={product.averageRating} />{" "}

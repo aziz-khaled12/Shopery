@@ -9,9 +9,10 @@ import useWishlistStore from "../../store/wishlistStore";
 const ProductCard = ({ product, className }) => {
 
   const { addToCart } = useCartStore();
-  const { openProductModal } = useProductModalStore();
+  const { openProductModal, setProduct } = useProductModalStore();
   const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlistStore();
-  const discountPrice = product.price - (product.price * product.discount) / 100;
+
+  const categoryId = product.categoryId;
   const navigate = useNavigate();
 
   const handleWishlist = (e) => {
@@ -26,12 +27,12 @@ const ProductCard = ({ product, className }) => {
   return (
     <div
       className={`${className} group border bg-white border-gray-200 transition-all duration-200 hover:z-10 hover:border-primary hover:shadow-hover-primary w-full p-2 sm:p-3 cursor-pointer ${className}`}
-      onClick={() => navigate("/categories/vegetables/chinese cabbage")}
+      onClick={() => navigate(`/categories/${categoryId}/${product.id}`)}
     >
       <div className="w-full h-48 sm:h-60 relative overflow-hidden ">
-        {product.discount && (
+        {product.discount.isActive && (
           <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-10">
-            <CardTag color={"red"}>sale {product.discount}%</CardTag>
+            <CardTag color={"red"}>sale {product.discount.percentage}%</CardTag>
           </div>
         )}
         <div className="absolute top-0 right-0 flex items-center gap-1 sm:gap-2 flex-col transition-all duration-200 opacity-0 invisible translate-y-6 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 mt-1 sm:mt-2 z-10">
@@ -45,6 +46,7 @@ const ProductCard = ({ product, className }) => {
             className="text-xs sm:text-base"
             onClick={(e) => {
               e.stopPropagation();
+              setProduct(product);
               openProductModal();
             }}
           />
@@ -62,12 +64,14 @@ const ProductCard = ({ product, className }) => {
             {product.title}
           </h1>
           <div className="font-medium flex gap-1 text-sm sm:text-base">
-            ${product.price.toFixed(2)}{" "}
-            {product.discount && (
+            ${product.discount.price.toFixed(2)}{" "}
+
+            {product.discount.isActive && (
               <span className="line-through text-gray-400 text-xs sm:text-sm">
-                ${discountPrice.toFixed(2)}
+                ${product.price.toFixed(2)}
               </span>
             )}
+
           </div>
           <StarRating rating={product.averageRating} className="mt-1" />
         </div>

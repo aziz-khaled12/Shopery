@@ -17,15 +17,23 @@ import { useProductModalStore } from "../../store/productModalStore";
 import Counter from "../ui/other/Counter";
 import { ImageSlider } from "../ui";
 import useCartStore from "../../store/cartStore";
-import { modalProduct } from "../../consts/ProductsConsts";
 
-const ProductModal = ({ product = modalProduct }) => {
-  const { isOpen, closeProductModal } = useProductModalStore();
+const ProductModal = () => {
+  const { isOpen, closeProductModal, product, resetProduct } =
+    useProductModalStore();
   const [count, setCount] = useState(0);
   const { addToCart } = useCartStore();
 
+  if (!product) return null;
+
   return (
-    <Modal open={isOpen} onClose={() => closeProductModal()}>
+    <Modal
+      open={isOpen}
+      onClose={() => {
+        closeProductModal();
+        resetProduct();
+      }}
+    >
       <section className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl 2xl:min-w-7xl">
         <div className="w-full lg:w-1/2">
           <ImageSlider images={product.images} />
@@ -63,16 +71,20 @@ const ProductModal = ({ product = modalProduct }) => {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
             <div className="gap-1 flex items-center">
-              <span className="line-through text-lg sm:text-xl text-gray-300">
+              <span className={` text-lg sm:text-xl ${product.discount.isActive ? "text-gray-300 line-through" : "text-gray-900"}  `}>
                 ${product.price}
               </span>
-              <span className="text-xl sm:text-2xl font-medium text-hard-primary">
-                ${product.discount}
-              </span>
+              {product.discount.isActive && (
+                <span className="text-xl sm:text-2xl font-medium text-hard-primary">
+                  ${product.discount.price}
+                </span>
+              )}
             </div>
-            <div className="text-sm rounded-full text-danger px-3 py-1 bg-danger/10 font-medium w-fit">
-              {product.discount}% Off
-            </div>
+            {product.discount.isActive && (
+              <div className="text-sm rounded-full text-danger px-3 py-1 bg-danger/10 font-medium w-fit">
+                {product.discount.percentage}% Off
+              </div>
+            )}
           </div>
 
           <Divider />

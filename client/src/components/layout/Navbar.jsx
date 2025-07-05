@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const Navbar = () => {
   const { pathname } = useLocation();
   return (
-    <div className="w-full mb-6">
+    <div className="w-full mb-8">
       <TopBar />
       {pathname.includes("account") ? "" : <SearchBar />}
       <NavMenu />

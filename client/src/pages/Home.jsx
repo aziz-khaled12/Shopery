@@ -16,7 +16,7 @@ import {
 
 const Home = () => {
   return (
-    <div className="pt-3 w-full flex flex-col">
+    <div className="w-full flex flex-col">
       <HeroSection />
       <PopularCategories />
       <PopularProducts />

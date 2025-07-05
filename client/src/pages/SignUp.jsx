@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const navigate = useNavigate()
   return (
-    <div className="w-full py-20 flex items-center justify-center px-6 sm:px-page">
+    <div className="w-full flex items-center justify-center px-6 sm:px-page">
       <div className="flex flex-col items-center p-6 pb-8 shadow-gray w-full max-w-[520px] bg-white/20 rounded-lg">
         <h1 className="text-black/90 text-xl sm:text-2xl md:text-3xl font-semibold mb-5">Create Account</h1>
         <div className="flex flex-col gap-3 w-full">
