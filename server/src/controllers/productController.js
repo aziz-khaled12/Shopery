@@ -1,17 +1,77 @@
+const { uploadProductImages, uploadProductImage } = require("../middleware/uploaders");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Product = require("../models/Product");
+
+// Product Image Upload Handlers
+  exports.uploadProductImagesHandler = async (req, res, next) => {
+  try {
+    // Use the upload middleware
+    uploadProductImages(req, res, (err) => {
+      if (err) {
+        if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+          return res.status(400).json({ error: 'Too many files uploaded. Maximum is 5.' });
+        }
+        return res.status(400).json({ error: err.message });
+      }
+
+      // Check if files were uploaded
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ error: 'No files uploaded' });
+      }
+
+      // Extract URLs and other info from uploaded files
+      const uploadedFiles = req.files.map(file => ({
+        url: file.path,
+        public_id: file.filename
+      }));
+
+      res.status(200).json({
+        message: 'Files uploaded successfully',
+        files: uploadedFiles,
+        count: uploadedFiles.length
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.uploadProductPreviewImageHandler = async (req, res, next) => {
+  try {
+    // Use the upload middleware
+    uploadProductImage(req, res, (err) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+      }
+
+      const uploadedFile = {
+        url: req.file.path,
+        public_id: req.file.filename
+      };
+
+      res.status(200).json({
+        message: 'File uploaded successfully',
+        file: uploadedFile,
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.createProduct = catchAsyncErrors(async (req, res) => {
   const newProduct = req.body;
 
-  const previewImage = req.files["previewImage"]?.[0];
-  const previewImageUrl = previewImage?.path || null;
-  const previewImageId = previewImage?.filename || null;
+  // Handle preview image URL from request body
+  const previewImageUrl = newProduct.previewImage || null;
+  const previewImageId = newProduct.previewImageId || null;
 
-  const galleryImages = (req.files["galleryImages"] || []).map((file) => ({
-    url: file.path,
-    public_id: file.filename,
-  }));
+  // Handle gallery images URLs from request body
+  const galleryImages = newProduct.images || [];
 
   const product = await Product.create({
     ...newProduct,
@@ -19,12 +79,14 @@ exports.createProduct = catchAsyncErrors(async (req, res) => {
     previewImageId,
     images: galleryImages,
   });
+  
   if (!product) {
     return res.status(400).json({
       success: false,
       message: "Product creation failed",
     });
   }
+  
   res.status(201).json({
     success: true,
     product,
@@ -68,14 +130,12 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
   const productId = req.params.id;
   const updatedData = req.body;
 
-  const previewImage = req.files["previewImage"]?.[0];
-  const previewImageUrl = previewImage?.path || null;
-  const previewImageId = previewImage?.filename || null;
+  // Handle preview image URL from request body
+  const previewImageUrl = updatedData.previewImage || null;
+  const previewImageId = updatedData.previewImageId || null;
 
-  const galleryImages = (req.files["galleryImages"] || []).map((file) => ({
-    url: file.path,
-    public_id: file.filename,
-  }));
+  // Handle gallery images URLs from request body
+  const galleryImages = updatedData.images || [];
 
   const product = await Product.findByIdAndUpdate(
     productId,
@@ -192,3 +252,30 @@ exports.filterProducts = catchAsyncErrors(async (req, res) => {
   });
 });
 
+exports.getHotDeals = catchAsyncErrors(async (req, res) => {
+  const products = await Product.find({discount: {$gt: 0}}).sort({discount: -1}).limit(12)
+  if (!products || products.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "No hot deals found",
+    });
+  }
+  res.status(200).json({
+    success: true,
+    products,
+  }); 
+})
+
+exports.getPopularProducts = catchAsyncErrors(async (req, res) => {
+  const products = await Product.find().sort({rating: -1}).limit(10)
+  if (!products || products.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "No popular products found",
+    });
+  }
+  res.status(200).json({
+    success: true,
+    products,
+  }); 
+})

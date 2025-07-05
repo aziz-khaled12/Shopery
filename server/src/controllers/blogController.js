@@ -39,10 +39,14 @@ const uploadBlogPreviewImageHandler = async (req, res, next) => {
         return res.status(400).json({ error: err.message });
       }
 
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+      }
+
       const uploadedFile = req.file.path;
 
       res.status(200).json({
-        message: 'Files uploaded successfully',
+        message: 'File uploaded successfully',
         file: uploadedFile,
       });
     });
