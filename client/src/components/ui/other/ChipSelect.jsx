@@ -17,10 +17,10 @@ const ChipSelect = ({ options = [], selected = [], setSelected }) => {
   return (
     <div className="w-full">
       <div className="flex flex-wrap gap-2">
-        {displayOptions.map((option) => {
+        {displayOptions.map((option, index) => {
           return (
             <button
-              key={option.id}
+              key={index}
               onClick={() => handleToggle(option.value)}
               className={`px-4 py-1.5 rounded-full text-sm border transition-all duration-200 cursor-pointer bg-gray-200 ${
                 selected.includes(option.value)

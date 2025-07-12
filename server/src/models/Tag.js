@@ -6,8 +6,6 @@ const tagSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true,
-    lowercase: true
   },
   slug: {
     type: String,
@@ -26,8 +24,15 @@ const tagSchema = new Schema({
 
 // Auto-generate slug before saving
 tagSchema.pre('save', function(next) {
-  if (!this.slug) {
-    this.slug = this.name.replace(/\s+/g, '-').toLowerCase();
+  if (!this.slug && this.name) {
+    this.slug = this.name
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+      .replace(/\-\-+/g, '-') // Replace multiple - with single -
+      .replace(/^-+/, '') // Trim - from start of text
+      .replace(/-+$/, ''); // Trim - from end of text
   }
   this.modifiedAt = new Date();
   next();

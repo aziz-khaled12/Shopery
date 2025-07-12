@@ -16,7 +16,6 @@ const responsiveSizeClasses = (size) => {
       .map(([breakpoint, value]) => {
         const prefix = breakpoint === "base" ? "" : `${breakpoint}:`;
         const classes = (sizeClassesMap[value] || "").split(" ");
-        console.log("classes:", classes.map((cls) => `${prefix}${cls}`).join(" "));
         return classes.map((cls) => `${prefix}${cls}`).join(" ");
       })
       .join(" ");

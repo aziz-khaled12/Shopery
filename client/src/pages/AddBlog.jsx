@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { categories, tags } from "../consts/BlogsConsts";
-import { uploadBlogPreviewImage } from "../api/blogs";
+import { uploadBlogPreviewImage } from "../api/seller/blogs";
 import {
   Button,
   ChipSelect,
@@ -12,6 +11,8 @@ import {
 import { Eye, Upload, Save, Plus } from "lucide-react";
 import MarkdownEditor from "../markdown/MarkdownEditor";
 import MarkdownPreview from "../markdown/MarkdownPreview";
+import { useCategories } from "../hooks/queries/useCategories";
+import { useTags } from "../hooks/queries/useTags";
 
 const AddBlog = () => {
   const [previewMode, setPreviewMode] = useState(false);
@@ -22,6 +23,8 @@ const AddBlog = () => {
     tags: [],
     previewImage: null,
   });
+  const categories = useCategories().data;
+  const tags = useTags().data;
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -36,7 +39,8 @@ const AddBlog = () => {
   };
 
   const handleSave = () => validateForm() && console.log("Saved:", formData);
-  const handlePublish = () => validateForm() && console.log("Published:", formData);
+  const handlePublish = () =>
+    validateForm() && console.log("Published:", formData);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -69,18 +73,10 @@ const AddBlog = () => {
           >
             {previewMode ? "Edit" : "Preview"}
           </IconButton>
-          <IconButton
-            onClick={handleSave}
-            icon={<Save />}
-            start
-          >
+          <IconButton onClick={handleSave} icon={<Save />} start>
             Save Draft
           </IconButton>
-          <IconButton
-            onClick={handlePublish}
-            icon={<Plus />}
-            start
-          >
+          <IconButton onClick={handlePublish} icon={<Plus />} start>
             Publish
           </IconButton>
         </div>
@@ -95,9 +91,7 @@ const AddBlog = () => {
                 <h2 className="text-xl font-semibold text-slate-800">
                   Content
                 </h2>
-                <p className="text-slate-500">
-                  Craft your engaging blog post
-                </p>
+                <p className="text-slate-500">Craft your engaging blog post</p>
               </div>
 
               <div className="space-y-6 h-full">
@@ -108,9 +102,7 @@ const AddBlog = () => {
                   <Input
                     placeholder="Enter your blog title..."
                     value={formData.title}
-                    onChange={(e) =>
-                      handleInputChange("title", e.target.value)
-                    }
+                    onChange={(e) => handleInputChange("title", e.target.value)}
                     className="text-lg font-medium"
                   />
                 </div>
@@ -123,7 +115,9 @@ const AddBlog = () => {
                   </label>
                   <MarkdownEditor
                     initialValue={formData.content}
-                    onChange={(content) => handleInputChange("content", content)}
+                    onChange={(content) =>
+                      handleInputChange("content", content)
+                    }
                   />
                 </div>
               </div>
@@ -148,7 +142,9 @@ const AddBlog = () => {
                   <Select
                     options={categories}
                     value={formData.category}
-                    selectOption={(value) => handleInputChange("category", value)}
+                    selectOption={(value) =>
+                      handleInputChange("category", value)
+                    }
                     placeholder="Select category"
                   />
                 </div>
@@ -182,9 +178,7 @@ const AddBlog = () => {
                   <p className="text-sm font-medium text-slate-600 mb-1">
                     Upload an image
                   </p>
-                  <p className="text-xs text-slate-500">
-                    PNG, JPG up to 10MB
-                  </p>
+                  <p className="text-xs text-slate-500">PNG, JPG up to 10MB</p>
                 </div>
                 <input
                   type="file"
@@ -196,9 +190,9 @@ const AddBlog = () => {
 
               {formData.previewImage && (
                 <div className="mt-4">
-                  <img 
-                    src={formData.previewImage} 
-                    alt="Preview" 
+                  <img
+                    src={formData.previewImage}
+                    alt="Preview"
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>

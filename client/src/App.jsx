@@ -1,7 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Navbar, Footer } from "./components/layout";
-import { Home, SignUp, Login, ProductPage, Wishlist, ShoppingCart, Checkout, Category, Blogs, About } from "./pages";
+import {
+  Home,
+  SignUp,
+  Login,
+  ProductPage,
+  Wishlist,
+  ShoppingCart,
+  Checkout,
+  Category,
+  Blogs,
+  About,
+} from "./pages";
 import ProductModal from "./components/modals/ProductModal";
 import Test from "./Test";
 import Dashboard from "./pages/Dashboard";
@@ -11,21 +22,24 @@ import Settings from "./pages/Settings";
 import AddBlog from "./pages/AddBlog";
 import AddProduct from "./pages/AddProduct";
 import Error from "./pages/Error";
+import { useAuthStore } from "./store/authStore";
 
 const App = () => {
-
   const { pathname } = useLocation();
   const prevPathname = useRef(pathname);
+
+  const { accessToken, userId } = useAuthStore();
+  console.log("Access Token: ", accessToken);
+  console.log("user: ", userId);
 
   useEffect(() => {
     // Only scroll if pathname actually changed
     if (prevPathname.current !== pathname) {
-      console.log("Navigated to:", pathname);
       window.scrollTo({ top: 0, behavior: "smooth" });
       prevPathname.current = pathname;
     }
   }, [pathname]);
-  
+
   return (
     <div className="w-full min-h-screen overflow-hidden">
       <Navbar />
@@ -57,7 +71,6 @@ const App = () => {
       </Routes>
       <ProductModal />
       <Footer />
-
     </div>
   );
 };

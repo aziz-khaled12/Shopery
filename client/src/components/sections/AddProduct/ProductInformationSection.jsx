@@ -15,12 +15,12 @@ const ProductInformationSection = ({ formData, handleInputChange }) => {
       <div className="space-y-6">
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">
-            Product Title
+            Product name
           </label>
           <Input
-            placeholder="Enter product title..."
-            value={formData.title}
-            onChange={(e) => handleInputChange("title", e.target.value)}
+            placeholder="Enter product name..."
+            value={formData.name}
+            onChange={(e) => handleInputChange("name", e.target.value)}
             className="text-lg font-medium"
           />
         </div>

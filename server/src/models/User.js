@@ -29,7 +29,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 8
   },
-  roleId: {
+  role: {
     type: Schema.Types.ObjectId,
     ref: 'Role',
     required: true

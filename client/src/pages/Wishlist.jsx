@@ -58,7 +58,7 @@ const Wishlist = ({ withTitle = true }) => {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                      className="w-16 h-16 object-cover rounded-lg flex-shrink-0 p-2"
                     />
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium text-gray-900 truncate">
@@ -99,7 +99,7 @@ const Wishlist = ({ withTitle = true }) => {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
+                      className="w-24 h-24 object-cover rounded-lg flex-shrink-0 p-2"
                     />
                     <div className="min-w-0 flex-1">
                       <h3 className="text-gray-900 truncate">{item.title}</h3>

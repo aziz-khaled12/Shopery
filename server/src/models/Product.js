@@ -69,6 +69,10 @@ const productSchema = new Schema({
       min: 0,
       max: 100
     },
+    price:{
+      type: Number,
+      default: 0
+    },
     startDate: Date,
     endDate: Date
   },

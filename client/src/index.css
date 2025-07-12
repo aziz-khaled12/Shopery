@@ -47,7 +47,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 5px ;
+  width: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -56,17 +56,103 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   @apply bg-primary/70;
-  transition: all .2s;
+  transition: all 0.2s;
   border-radius: 10px;
   border: 2px solid transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-   @apply bg-primary;
-   transition: all .2s;
-
+  @apply bg-primary;
+  transition: all 0.2s;
 }
 
 .w-md-editor-text-input {
   font-family: inherit !important;
+}
+
+/* Customize calendar layout and typography */
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.custom-datepicker {
+  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+}
+
+/* Days styling */
+.custom-datepicker-day {
+  padding: 0.5rem;
+  margin: 0.2rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover on day */
+.react-datepicker__day:hover {
+  background-color: #d2f8dc !important;
+  color: #00b207 !important;
+  border-radius: 0.5rem;
+}
+
+/* Selected day */
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #00b207 !important;
+  color: white !important;
+  border-radius: 0.5rem;
+}
+
+/* Today highlight */
+.react-datepicker__day--today {
+  border: 1px solid #00b207 !important;
+  background-color: #e6fbea !important;
+  color: #00b207 !important;
+  border-radius: 0.5rem;
+}
+
+/* Month and year dropdowns */
+.react-datepicker__current-month,
+.react-datepicker__header {
+  background-color: #f0fdf4;
+  color: #00b207;
+  border-bottom: none;
+}
+
+/* Popper arrow */
+.react-datepicker__triangle {
+  display: none;
+}
+
+/* Header */
+.react-datepicker__header {
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+/* Weekdays (Mon, Tue...) */
+.react-datepicker__day-name {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.react-datepicker__navigation {
+  top: 20px;
+}
+
+.react-datepicker__navigation--next {
+  right: 10px;
+}
+
+.react-datepicker__navigation--previous {
+  left: 10px;
+}
+
+
+/* Linear animation effect for seamless swiper autoplay */
+.infinite-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
 }

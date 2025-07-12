@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "../ui";
 import { Upload, X } from "lucide-react";
-import { uploadBlogImages } from "../../api/blogs";
+import { uploadBlogImages } from "../../api/seller/blogs";
 
 const ImageUploadModal = ({ isOpen, onClose, onUpload }) => {
   const [files, setFiles] = useState([]);

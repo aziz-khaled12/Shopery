@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Select } from "../../ui";
 import { useNavigate } from "react-router-dom";
 import { MapPin } from "lucide-react";
+import { useAuthStore } from "../../../store/authStore";
 
 // Language and currency options
 const LANGUAGE_OPTIONS = [
@@ -76,6 +77,13 @@ const AuthLinks = () => {
 const TopBar = () => {
   const [selectedLan, setSelectedLan] = useState(0);
   const [selectedCurrency, setSelectedCurrency] = useState(0);
+  const { logout, isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/account/login");
+  };
 
   return (
     <div className="sm:px-page px-6 py-3 flex text-gray-400 items-center justify-between w-full shadow-sm bg-black/80">
@@ -92,7 +100,16 @@ const TopBar = () => {
           />
         </div>
         <div className="w-[2px] h-5 bg-gray-300" />
-        <AuthLinks />
+        {isAuthenticated ? (
+          <span
+            className="cursor-pointer hover:text-primary transition-all duration-200"
+            onClick={handleLogout}
+          >
+            logout
+          </span>
+        ) : (
+          <AuthLinks />
+        )}
       </div>
     </div>
   );

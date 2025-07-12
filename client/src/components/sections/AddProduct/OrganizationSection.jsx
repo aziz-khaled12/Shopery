@@ -1,16 +1,16 @@
-import { categories, tags } from "../../../consts/BlogsConsts";
+import { useCategories } from "../../../hooks/queries/useCategories";
+import { useTags } from "../../../hooks/queries/useTags";
 import { Select, ChipSelect } from "../../ui";
 
 const OrganizationSection = ({ formData, handleInputChange }) => {
+  const categories = useCategories().data;
+  const tags = useTags().data
+
   return (
     <section className="bg-white rounded-xl shadow-sm p-6">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-slate-800">
-          Organization
-        </h2>
-        <p className="text-slate-500">
-          Categorize and tag your product
-        </p>
+        <h2 className="text-xl font-semibold text-slate-800">Organization</h2>
+        <p className="text-slate-500">Categorize and tag your product</p>
       </div>
 
       <div className="space-y-6">
@@ -21,9 +21,7 @@ const OrganizationSection = ({ formData, handleInputChange }) => {
           <Select
             options={categories}
             value={formData.category}
-            selectOption={(value) =>
-              handleInputChange("category", value)
-            }
+            selectOption={(value) => handleInputChange("category", value)}
             placeholder="Choose a category"
           />
         </div>
@@ -43,4 +41,4 @@ const OrganizationSection = ({ formData, handleInputChange }) => {
   );
 };
 
-export default OrganizationSection
+export default OrganizationSection;

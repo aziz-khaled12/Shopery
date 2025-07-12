@@ -1,6 +1,12 @@
+import { DollarSign, Percent } from "lucide-react";
 import { Input, Divider } from "../../ui";
+import DatePickerInput from "../../ui/inputs/DatePickerInput";
 
-const PricingInventorySection = ({ formData, handleInputChange, calculateDiscountedPrice }) => {
+const PricingInventorySection = ({
+  formData,
+  handleInputChange,
+  calculateDiscountedPrice,
+}) => {
   return (
     <section className="bg-white rounded-xl shadow-sm p-6">
       <div className="mb-6">
@@ -19,17 +25,12 @@ const PricingInventorySection = ({ formData, handleInputChange, calculateDiscoun
               Price
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">
-                $
-              </span>
               <Input
                 type="number"
                 placeholder="0.00"
                 value={formData.price}
-                onChange={(e) =>
-                  handleInputChange("price", e.target.value)
-                }
-                className="pl-8"
+                onChange={(e) => handleInputChange("price", e.target.value)}
+                icon={DollarSign}
               />
             </div>
           </div>
@@ -42,9 +43,7 @@ const PricingInventorySection = ({ formData, handleInputChange, calculateDiscoun
               type="number"
               placeholder="0"
               value={formData.quantity}
-              onChange={(e) =>
-                handleInputChange("quantity", e.target.value)
-              }
+              onChange={(e) => handleInputChange("quantity", e.target.value)}
             />
           </div>
         </div>
@@ -84,9 +83,6 @@ const PricingInventorySection = ({ formData, handleInputChange, calculateDiscoun
                   Discount Value
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">
-                    %
-                  </span>
                   <Input
                     type="number"
                     placeholder="0"
@@ -97,11 +93,47 @@ const PricingInventorySection = ({ formData, handleInputChange, calculateDiscoun
                         percentage: e.target.value,
                       })
                     }
-                    className="pl-8"
+                    icon={Percent}
                   />
                 </div>
               </div>
-              {formData.price && formData.discount.percentage > 0 && (
+
+              <div className="w-full flex items-center gap-4">
+                <div className="flex-1">
+                  <label className="block text-sm font-medium mb-1 text-slate-700">
+                    Start Date
+                  </label>
+                  <div className="relative">
+                    <DatePickerInput
+                      value={formData.discount.startDate}
+                      onChange={(e) =>
+                        handleInputChange("discount", {
+                          ...formData.discount,
+                          startDate: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium mb-1 text-slate-700">
+                    End Date
+                  </label>
+                  <div className="relative">
+                    <DatePickerInput
+                      value={formData.discount.endDate}
+                      onChange={(e) =>
+                        handleInputChange("discount", {
+                          ...formData.discount,
+                          endDate: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {formData.price > 0 && formData.discount.percentage > 0 && (
                 <div className="md:col-span-2 p-3 bg-green-50 rounded border border-green-200">
                   <p className="text-sm text-green-800">
                     <span className="font-medium">Final Price: </span>
@@ -123,4 +155,4 @@ const PricingInventorySection = ({ formData, handleInputChange, calculateDiscoun
   );
 };
 
-export default PricingInventorySection
+export default PricingInventorySection;

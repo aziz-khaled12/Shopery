@@ -64,6 +64,7 @@ const Testimonials = () => {
       <Swiper
         modules={[Navigation]}
         spaceBetween={24}
+        loop={true}
         breakpoints={{
           640: {
             slidesPerView: 1,

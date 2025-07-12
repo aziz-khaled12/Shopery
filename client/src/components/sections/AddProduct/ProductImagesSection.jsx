@@ -1,20 +1,17 @@
 import { Upload, Plus, X } from "lucide-react";
 
-const ProductImagesSection = ({ 
-  formData, 
-  handlePreviewImageUpload, 
-  handleAdditionalImageUpload, 
+const ProductImagesSection = ({
+  formData,
+  handlePreviewImageUpload,
+  handleAdditionalImageUpload,
   removeAdditionalImage,
+  removePreviewImage,
 }) => {
   return (
     <section className="bg-white rounded-xl shadow-sm p-6">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-slate-800">
-          Product Images
-        </h2>
-        <p className="text-slate-500">
-          Upload preview and additional images
-        </p>
+        <h2 className="text-xl font-semibold text-slate-800">Product Images</h2>
+        <p className="text-slate-500">Upload preview and additional images</p>
       </div>
 
       <div className="space-y-6">
@@ -23,29 +20,40 @@ const ProductImagesSection = ({
             Preview Image
           </label>
           <label className="block cursor-pointer">
-            <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center bg-slate-50/50 hover:bg-slate-100/50 transition-colors">
+            <div
+              className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+                formData.previewImage
+                  ? "border-gray-300 bg-gray-100 cursor-not-allowed opacity-60"
+                  : "border-slate-300 bg-slate-50/50 hover:bg-slate-100/50"
+              }`}
+            >
               <Upload className="mx-auto h-10 w-10 text-slate-400 mb-3" />
               <p className="text-sm font-medium text-slate-600 mb-1">
                 Click to upload preview image
               </p>
-              <p className="text-xs text-slate-500">
-                PNG, JPG, GIF up to 10MB
-              </p>
+              <p className="text-xs text-slate-500">PNG, JPG, GIF up to 10MB</p>
             </div>
             <input
               type="file"
               accept="image/*"
               onChange={handlePreviewImageUpload}
               className="hidden"
+              disabled={!!formData.previewImage}
             />
           </label>
-          {formData.previewImage && (
-            <div className="mt-4">
-              <img 
-                src={formData.previewImage} 
-                alt="Preview" 
+          {formData.previewImage?.previewUrl && (
+            <div className="relative mt-4 rounded-lg overflow-hidden border">
+              <img
+                src={formData.previewImage.previewUrl}
+                alt="Preview"
                 className="w-full h-full object-cover rounded-lg"
               />
+              <button
+                onClick={removePreviewImage}
+                className="absolute top-2 right-2 bg-white text-red-600 rounded-full p-1 shadow hover:bg-red-100 transition"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
           )}
         </div>
@@ -55,7 +63,13 @@ const ProductImagesSection = ({
             Additional Images
           </label>
           <label className="block cursor-pointer">
-            <div className="border-2 border-dashed border-blue-300 rounded-lg p-6 text-center bg-blue-50/50 hover:bg-blue-100/50 transition-colors">
+            <div
+              className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+                formData.images.length >= 4
+                  ? "border-gray-300 bg-gray-100 cursor-not-allowed opacity-60"
+                  : "border-blue-300 bg-blue-50/50 hover:bg-blue-100/50"
+              }`}
+            >
               <Plus className="mx-auto h-10 w-10 text-blue-400 mb-3" />
               <p className="text-sm font-medium text-blue-600 mb-1">
                 Click to upload additional images
@@ -70,26 +84,29 @@ const ProductImagesSection = ({
               multiple
               onChange={handleAdditionalImageUpload}
               className="hidden"
+              disabled={formData.images.length >= 4}
             />
           </label>
 
-          {formData.additionalImages.length > 0 && (
-            <div className="mt-3 space-y-2">
-              <p className="text-sm font-medium text-slate-700">
-                Additional Images ({formData.additionalImages.length}/4)
+          {formData.images.length > 0 && (
+            <div className="mt-3">
+              <p className="text-sm font-medium text-slate-700 mb-2">
+                Additional Images ({formData.images.length}/4)
               </p>
-              <div className="space-y-2">
-                {formData.additionalImages.map((file, index) => (
+              <div className="grid grid-cols-2 gap-3">
+                {formData.images.map((file, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-2 bg-blue-50 border border-blue-200 rounded"
+                    className="relative group rounded-lg overflow-hidden border border-blue-200"
                   >
-                    <span className="text-sm text-blue-700 truncate">
-                      {file.name}
-                    </span>
+                    <img
+                      src={file.previewUrl}
+                      alt={`Image ${index + 1}`}
+                      className="w-full h-40 object-cover"
+                    />
                     <button
                       onClick={() => removeAdditionalImage(index)}
-                      className="p-1 rounded-full hover:bg-red-100 hover:text-red-600"
+                      className="absolute top-1 right-1 bg-white text-red-600 rounded-full p-1 shadow hover:bg-red-100 transition"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -104,4 +121,4 @@ const ProductImagesSection = ({
   );
 };
 
-export default ProductImagesSection
+export default ProductImagesSection;

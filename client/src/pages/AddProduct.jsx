@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import PreviewProduct from "../components/sections/AddProduct/PreviewProduct";
-import { uploadProductImages, uploadProductPreviewImage } from "../api/products";
-import ImageUploadModal from "../components/modals/ImageUploadModal";
+import { createProduct } from "../api/seller/products";
 import {
   AddProductHeader,
   ProductInformationSection,
   PricingInventorySection,
   OrganizationSection,
-  ProductImagesSection
+  ProductImagesSection,
 } from "../components/sections/AddProduct";
+import { useAuthStore } from "../store/authStore";
 
 const AddProduct = () => {
+  const { userId } = useAuthStore();
+
   const [formData, setFormData] = useState({
-    title: "",
+    sellerId: userId || "",
+    name: "",
     category: "",
     description: "",
     price: 0,
     quantity: 0,
     previewImage: null,
-    additionalImages: [],
     tags: [],
     brand: "",
     averageRating: 0,
@@ -29,51 +31,58 @@ const AddProduct = () => {
       isActive: false,
       percentage: 0,
       price: 0,
+      startDate: new Date(),
+      endDate: new Date(),
     },
   });
   const [previewMode, setPreviewMode] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleImageUpload = (files) => {
-    setFormData({...formData, additionalImages: files});
-    handleClose();
-  };
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handlePreviewImageUpload = async (e) => {
+  const handlePreviewImageUpload = (e) => {
+    if (formData.previewImage) return; // Only allow one
     const file = e.target.files[0];
-    const previewImage = await uploadProductPreviewImage(file);
-    handleInputChange("previewImage", previewImage);
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      handleInputChange("previewImage", { file, previewUrl });
+    }
   };
 
-  const handleAdditionalImageUpload = async (e) => {
-    if (formData.additionalImages <= 5) {
-      const files = Array.from(e.target.files || []);
-      const additionalImages = await uploadProductImages(files);
-      setFormData((prev) => ({
-        ...prev,
-        additionalImages: [...prev.additionalImages, ...additionalImages],
-      }));
-    }
+  const handleAdditionalImageUpload = (e) => {
+    const maxAllowed = 4 - formData.images.length;
+    if (maxAllowed <= 0) return;
+
+    const files = Array.from(e.target.files || []).slice(0, maxAllowed);
+    const newImages = files.map((file) => ({
+      file,
+      previewUrl: URL.createObjectURL(file),
+    }));
+
+    setFormData((prev) => ({
+      ...prev,
+      images: [...prev.images, ...newImages],
+    }));
   };
 
   const removeAdditionalImage = (index) => {
     setFormData((prev) => ({
       ...prev,
-      additionalImages: prev.additionalImages.filter((_, i) => i !== index),
+      images: prev.images.filter((_, i) => i !== index),
+    }));
+  };
+
+  const removePreviewImage = () => {
+    setFormData((prev) => ({
+      ...prev,
+      previewImage: null,
     }));
   };
 
   const handleSave = () => {
     if (
-      !formData.title ||
+      !formData.name ||
       !formData.category ||
       !formData.description ||
       !formData.price ||
@@ -86,7 +95,7 @@ const AddProduct = () => {
 
   const handlePublish = () => {
     if (
-      !formData.title ||
+      !formData.name ||
       !formData.category ||
       !formData.description ||
       !formData.price ||
@@ -95,6 +104,7 @@ const AddProduct = () => {
       console.log("Missing information");
       return;
     }
+    createProduct(formData);
     console.log("Product published!");
   };
 
@@ -126,9 +136,9 @@ const AddProduct = () => {
       {!previewMode ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <main className="lg:col-span-2 space-y-6">
-            <ProductInformationSection 
-              formData={formData} 
-              handleInputChange={handleInputChange} 
+            <ProductInformationSection
+              formData={formData}
+              handleInputChange={handleInputChange}
             />
             <PricingInventorySection
               formData={formData}
@@ -138,28 +148,22 @@ const AddProduct = () => {
           </main>
 
           <aside className="space-y-6">
-            <OrganizationSection 
-              formData={formData} 
-              handleInputChange={handleInputChange} 
+            <OrganizationSection
+              formData={formData}
+              handleInputChange={handleInputChange}
             />
             <ProductImagesSection
               formData={formData}
               handlePreviewImageUpload={handlePreviewImageUpload}
               handleAdditionalImageUpload={handleAdditionalImageUpload}
               removeAdditionalImage={removeAdditionalImage}
-              setIsOpen={setIsOpen}
+              removePreviewImage={removePreviewImage}
             />
           </aside>
         </div>
       ) : (
         <PreviewProduct formData={formData} />
       )}
-      
-      <ImageUploadModal
-        isOpen={isOpen}
-        onClose={handleClose}
-        onUpload={handleImageUpload}
-      />
     </div>
   );
 };
