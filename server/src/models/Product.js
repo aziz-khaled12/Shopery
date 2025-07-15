@@ -26,6 +26,10 @@ const productSchema = new Schema({
     required: true,
     min: 0
   },
+  unit: {
+    type: String,
+    required: true,
+  },
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category',

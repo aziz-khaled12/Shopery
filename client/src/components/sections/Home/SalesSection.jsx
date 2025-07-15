@@ -1,8 +1,8 @@
 import React from "react";
-import { SaleCard } from "../../../features";
 import Sales1 from "/Sales1.png";
 import Sales2 from "/Sales2.png";
 import Sales3 from "/Sales3.png";
+import { SaleCard } from "../../cards";
 
 const SalesSection = () => {
   return (

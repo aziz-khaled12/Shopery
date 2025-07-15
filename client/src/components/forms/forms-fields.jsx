@@ -1,4 +1,4 @@
-import { Input, Select, Textarea } from "../../components/ui";
+import { Input, Select, Textarea } from "../ui";
 
 export const checkoutFormFields = [
   {

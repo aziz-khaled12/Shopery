@@ -13,22 +13,25 @@ exports.getAllCategories = catchAsyncErrors(async (req, res) => {
 
 
 exports.insertCategories = catchAsyncErrors(async (req, res) => {
-  const { names } = req.body;
+  // Handle single category creation with image upload
+  if (req.file) {
+    const { name } = req.body;
 
-  if (names.length === 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Tag name is required",
+    if (!name) {
+      return res.status(400).json({
+        success: false,
+        message: "Category name is required",
+      });
+    }
+
+    const category = await Category.create({
+      name,
+      image: req.file.path // Cloudinary URL
+    });
+
+    return res.status(201).json({
+      success: true,
+      categories: [category],
     });
   }
-
-  console.log("Names received:", names);
-
-  // Create multiple tags from the array of names
-const categories = await Promise.all(names.map(name => Category.create({ name })));
-  res.status(201).json({
-    success: true,
-    categories,
-  });
 });
-

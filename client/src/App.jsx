@@ -22,15 +22,13 @@ import Settings from "./pages/Settings";
 import AddBlog from "./pages/AddBlog";
 import AddProduct from "./pages/AddProduct";
 import Error from "./pages/Error";
+import AddCategoryForm from "./pages/AddCategoryForm";
 import { useAuthStore } from "./store/authStore";
 
 const App = () => {
   const { pathname } = useLocation();
   const prevPathname = useRef(pathname);
 
-  const { accessToken, userId } = useAuthStore();
-  console.log("Access Token: ", accessToken);
-  console.log("user: ", userId);
 
   useEffect(() => {
     // Only scroll if pathname actually changed
@@ -39,6 +37,12 @@ const App = () => {
       prevPathname.current = pathname;
     }
   }, [pathname]);
+
+  const {accessToken} = useAuthStore();
+
+  useEffect(() => {
+    console.log("App mounted with accessToken:", accessToken);
+  }, [accessToken])
 
   return (
     <div className="w-full min-h-screen overflow-hidden">
@@ -67,6 +71,7 @@ const App = () => {
         <Route path="about" element={<About />} />
         <Route path="blog" element={<AddBlog />} />
         <Route path="product" element={<AddProduct />} />
+        <Route path="cat" element={<AddCategoryForm />} />
         <Route path="*" element={<Error />} />
       </Routes>
       <ProductModal />

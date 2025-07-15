@@ -9,6 +9,7 @@ export const useCategories = (options = {}) => {
       data.categories.map((category) => ({
         label: category.name,
         value: category._id,
+        image: category.image,
       })),
     ...options,
   });

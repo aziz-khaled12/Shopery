@@ -5,7 +5,7 @@ import {
   IconButton2,
   StarRating,
   Countdown,
-} from "../../components/ui";
+} from "../ui";
 import { Eye, Heart } from "lucide-react";
 import useCartStore from "../../store/cartStore";
 

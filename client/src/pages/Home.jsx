@@ -1,6 +1,4 @@
 import React from "react";
-
-import { DiscountCard } from "../features";
 import {
   Carousel,
   FeaturedProducts,
@@ -13,6 +11,7 @@ import {
   SalesSection,
   Testimonials,
 } from "../components/sections/Home";
+import { DiscountCard } from "../components/cards";
 
 const Home = () => {
   return (

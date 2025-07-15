@@ -4,8 +4,7 @@ const {
 } = require("../middleware/uploaders");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Product = require("../models/Product");
-const createUploader = require('../middleware/cloudinaryStorage');
-
+const createUploader = require("../middleware/cloudinaryStorage");
 
 // Product Image Upload Handlers
 exports.uploadProductImagesHandler = async (req, res, next) => {
@@ -73,7 +72,9 @@ exports.uploadProductPreviewImageHandler = async (req, res, next) => {
 exports.createProduct = catchAsyncErrors(async (req, res) => {
   const newProduct = req.body;
 
-  const product = await Product.create(newProduct);
+  const product = await Product.create(newProduct)
+    .populate("category")
+    .populate("tags");
 
   if (!product) {
     return res.status(400).json({
@@ -86,7 +87,10 @@ exports.createProduct = catchAsyncErrors(async (req, res) => {
 });
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
-  const products = await Product.find().sort({ createdAt: -1 });
+  const products = await Product.find()
+    .sort({ createdAt: -1 })
+    .populate("category")
+    .populate("tags");
 
   if (!products || products.length === 0) {
     return res.status(404).json({
@@ -102,8 +106,11 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
 });
 
 exports.getProductDetails = catchAsyncErrors(async (req, res) => {
-  const productId = req.params.id;
-  const product = await Product.findById(productId);
+  const { productId } = req.params;
+
+  const product = await Product.findById(productId)
+    .populate("category")
+    .populate("tags");
 
   if (!product) {
     return res.status(404).json({
@@ -138,7 +145,9 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
       images: galleryImages,
     },
     { new: true, runValidators: true }
-  );
+  )
+    .populate("category")
+    .populate("tags");
 
   if (!product) {
     return res.status(404).json({
@@ -172,7 +181,10 @@ exports.deleteProduct = catchAsyncErrors(async (req, res) => {
 
 exports.getProductsByCategory = catchAsyncErrors(async (req, res) => {
   const category = req.params.category;
-  const products = await Product.find({ category }).sort({ createdAt: -1 });
+  const products = await Product.find({ category })
+    .sort({ createdAt: -1 })
+    .populate("category")
+    .populate("tags");
 
   if (!products || products.length === 0) {
     return res.status(404).json({
@@ -198,7 +210,10 @@ exports.searchProducts = catchAsyncErrors(async (req, res) => {
 
   const products = await Product.find({
     name: { $regex: query, $options: "i" },
-  }).sort({ createdAt: -1 });
+  })
+    .sort({ createdAt: -1 })
+    .populate("category")
+    .populate("tags");
 
   if (!products || products.length === 0) {
     return res.status(404).json({
@@ -229,7 +244,10 @@ exports.filterProducts = catchAsyncErrors(async (req, res) => {
     filter.rating = { $gte: Number(rating) };
   }
 
-  const products = await Product.find(filter).sort({ createdAt: -1 });
+  const products = await Product.find(filter)
+    .sort({ createdAt: -1 })
+    .populate("category")
+    .populate("tags");
 
   if (!products || products.length === 0) {
     return res.status(404).json({
@@ -247,7 +265,9 @@ exports.filterProducts = catchAsyncErrors(async (req, res) => {
 exports.getHotDeals = catchAsyncErrors(async (req, res) => {
   const products = await Product.find({ discount: { $gt: 0 } })
     .sort({ discount: -1 })
-    .limit(12);
+    .limit(12)
+    .populate("category")
+    .populate("tags");
   if (!products || products.length === 0) {
     return res.status(404).json({
       success: false,
@@ -261,7 +281,11 @@ exports.getHotDeals = catchAsyncErrors(async (req, res) => {
 });
 
 exports.getPopularProducts = catchAsyncErrors(async (req, res) => {
-  const products = await Product.find().sort({ rating: -1 }).limit(10);
+  const products = await Product.find()
+    .sort({ rating: -1 })
+    .limit(10)
+    .populate("category")
+    .populate("tags");
   if (!products || products.length === 0) {
     return res.status(404).json({
       success: false,

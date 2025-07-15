@@ -1,8 +1,8 @@
 import React from "react";
 import Apple from "/Apple.png";
-import { ProductCard } from "../../../features";
 import { GridContainer, SectionHeader } from "../../ui";
 import { products } from "../../../consts/ProductsConsts";
+import { ProductCard } from "../../cards";
 
 const FeaturedProducts = () => {
 
@@ -10,7 +10,7 @@ const FeaturedProducts = () => {
     <div className="w-full sm:px-page px-6">
       <SectionHeader title={"Featured Products"} link={"/products"} />
 
-      <GridContainer className="lg:grid-cols-6 gap-6 sm:gap-4 md:gap-3">
+      <GridContainer gap={2}>
         {products.map((product, index) => {
           return (
             <ProductCard

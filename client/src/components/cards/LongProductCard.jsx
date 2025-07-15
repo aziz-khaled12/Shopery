@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton2, StarRating } from "../../components/ui";
+import { IconButton2, StarRating } from "../ui";
 import { Eye, Heart, ShoppingCart } from "lucide-react";
 import useCartStore from "../../store/cartStore";
 

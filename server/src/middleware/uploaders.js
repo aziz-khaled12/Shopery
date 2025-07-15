@@ -4,6 +4,7 @@ const createUploader = require('./cloudinaryStorage');
 // Single file uploaders
 const uploadProfilePicture = createUploader('profile_pictures').single('image');
 const uploadProductImage = createUploader('product_images').single('image');
+const uploadCategoryImage = createUploader('categories').single('image');
 const uploadBlogImage = createUploader('blog_images').single('image');
 
 // Multi-file uploaders (e.g., for galleries)
@@ -16,4 +17,5 @@ module.exports = {
   uploadBlogImage,
   uploadProductImages,
   uploadBlogImages,
+  uploadCategoryImage,
 };

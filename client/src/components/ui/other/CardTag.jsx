@@ -12,7 +12,7 @@ const CardTag = ({ color, children }) => {
   const bgColorClass = colors[color] || "bg-gray-600";
   return (
     <div
-      className={`px-2 py-1 ${bgColorClass} text-white rounded-sm text-sm`}
+      className={`px-2 py-1 ${bgColorClass} text-white rounded-sm text-xs sm:text-sm`}
     >
       {children}
     </div>

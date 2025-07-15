@@ -19,7 +19,7 @@ const PricingInventorySection = ({
       </div>
 
       <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
               Price
@@ -44,6 +44,17 @@ const PricingInventorySection = ({
               placeholder="0"
               value={formData.quantity}
               onChange={(e) => handleInputChange("quantity", e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Unit
+            </label>
+            <Input
+              type="text"
+              placeholder="e.g. kg, pcs"
+              value={formData.unit}
+              onChange={(e) => handleInputChange("unit", e.target.value)}
             />
           </div>
         </div>

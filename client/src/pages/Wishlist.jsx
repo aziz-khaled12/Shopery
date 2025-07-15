@@ -2,14 +2,14 @@ import React from "react";
 import { Button } from "../components/ui";
 import { CircleX, Heart } from "lucide-react";
 import useWishlistStore from "../store/wishlistStore";
-import useProductsStore from "../store/productsStore";
 import useCartStore from "../store/cartStore";
 
 const Wishlist = ({ withTitle = true }) => {
   const { wishlist } = useWishlistStore();
   const { addToCart } = useCartStore();
-  const { getProducts } = useProductsStore();
-  const products = getProducts(wishlist.map((item) => item));
+
+  const products = []
+
 
   return (
     <div className={`w-full  ${withTitle ? "px-6 sm:px-page" : "p-0"}`}>
@@ -69,12 +69,12 @@ const Wishlist = ({ withTitle = true }) => {
                       </p>
                       <span
                         className={`inline-flex items-center px-2 py-1 rounded-sm text-sm font-medium mt-2 ${
-                          item.inStock
+                          item.quntity > 0
                             ? "bg-green-100 text-primary"
                             : "bg-red-100 text-danger"
                         }`}
                       >
-                        {item.inStock ? "In Stock" : "Out of Stock"}
+                        {item.quntity > 0 ? "In Stock" : "Out of Stock"}
                       </span>
                     </div>
                   </div>
@@ -109,18 +109,25 @@ const Wishlist = ({ withTitle = true }) => {
                   <div className="col-span-2 font-medium">
                     <span
                       className={` ${
-                        item.discount.isActive ? "line-through text-gray-500" : "text-gray-900"
+                        item.discount.isActive
+                          ? "line-through text-gray-500"
+                          : "text-gray-900"
                       }`}
                     >
                       ${item.price}{" "}
                     </span>
                     <span
                       className={`${
-                        item.discount.isActive ? "text-primary" : "text-gray-500"
+                        item.discount.isActive
+                          ? "text-primary"
+                          : "text-gray-500"
                       }`}
                     >
                       {item.discount.isActive
-                        ? `$${item.price - (item.price * item.discount.percentage) / 100}`
+                        ? `$${
+                            item.price -
+                            (item.price * item.discount.percentage) / 100
+                          }`
                         : ""}
                     </span>
                   </div>
@@ -128,18 +135,18 @@ const Wishlist = ({ withTitle = true }) => {
                   <div className="col-span-2">
                     <span
                       className={`inline-flex items-center px-2 py-1 rounded-sm text-sm font-medium ${
-                        item.inStock
+                        item.quntity > 0
                           ? "bg-green-100 text-primary"
                           : "bg-red-100 text-danger"
                       }`}
                     >
-                      {item.inStock ? "In Stock" : "Out of Stock"}
+                      {item.quntity > 0 ? "In Stock" : "Out of Stock"}
                     </span>
                   </div>
 
                   <div className="col-span-2 flex gap-4 items-center">
                     <Button
-                      variant={item.inStock ? "fill" : "disabled"}
+                      variant={item.quntity > 0 ? "fill" : "disabled"}
                       size="small"
                       onClick={() => addToCart(item)}
                     >

@@ -1,11 +1,13 @@
-
 const express = require("express");
-const { getAllCategories, insertCategories } = require("../../controllers/core/categoryController");
-const authenticateUser = require("../../middleware/auth");
+const {
+  getAllCategories,
+  insertCategories,
+} = require("../../controllers/core/categoryController");
+const { uploadCategoryImage } = require("../../middleware/uploaders");
 
 const router = express.Router();
 
-router.get("/All",  getAllCategories);
-router.post("/", authenticateUser, insertCategories);
+router.get("/All", getAllCategories);
+router.post("/", uploadCategoryImage, insertCategories);
 
 module.exports = router;

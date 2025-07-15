@@ -1,13 +1,15 @@
 import React from "react";
-import AccountSettingsForm from "../features/forms/AccountSettingsForm";
-import BillingAdressForm from "../features/forms/BillingAdressForm";
-import ChangePassword from "../features/forms/ChangePassword";
+import {
+  AccountSettingsForm,
+  BillingAddressForm,
+  ChangePassword,
+} from "../components/forms";
 
 const Settings = () => {
   return (
     <div className="flex flex-col gap-6">
       <AccountSettingsForm />
-      <BillingAdressForm />
+      <BillingAddressForm />
       <ChangePassword />
     </div>
   );

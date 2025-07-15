@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { SettingsFormContainer } from "../../components/ui";
+import { SettingsFormContainer } from "../ui";
 import { billingAddressFields, renderField } from "./forms-fields";
 
-const BillingAdressForm = () => {
+const BillingAddressForm = () => {
   const [formData, setFormData] = useState({});
 
   const handleChange = (name, value) => {
@@ -39,4 +39,4 @@ const BillingAdressForm = () => {
   );
 };
 
-export default BillingAdressForm;
+export default BillingAddressForm;

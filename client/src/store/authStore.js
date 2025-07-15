@@ -44,7 +44,7 @@ const getUserIdFromToken = (token) => {
   if (!token) return null;
   try {
     const decoded = jwtDecode(token);
-    return decoded.userId; 
+    return decoded.userId;
   } catch (error) {
     console.error("Failed to get user ID from token:", error);
     return null;
@@ -55,11 +55,11 @@ const getUserIdFromToken = (token) => {
 const initializeAuth = () => {
   const token = getTokenFromStorage();
   const isValid = token && !isTokenExpired(token);
-  
+
   if (!isValid && token) {
     removeTokenFromStorage();
   }
-  
+
   return {
     accessToken: isValid ? token : null,
     userId: isValid ? getUserIdFromToken(token) : null,
@@ -84,7 +84,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const userId = getUserIdFromToken(token);
       setTokenInStorage(token);
-      
+
       set({
         accessToken: token,
         userId,
@@ -102,15 +102,15 @@ export const useAuthStore = create((set, get) => ({
 
   logout: (options = {}) => {
     const { error = null, skipStorage = false } = options;
-    
+
     // Clear logout timer
     get().clearLogoutTimer();
-    
+
     // Clear storage unless explicitly skipped
     if (!skipStorage) {
       removeTokenFromStorage();
     }
-    
+
     set({
       accessToken: null,
       userId: null,
@@ -118,20 +118,22 @@ export const useAuthStore = create((set, get) => ({
       isAuthenticated: false,
       error,
     });
+
+    console.log("User logged out successfully");
+    window.location.href = "/account/login";
   },
 
   // Token validation and timer management
   validateToken: () => {
-    const { accessToken } = get();
-    
-    if (!accessToken) {
-      get().logout({ error: "No access token found" });
-      return false;
-    }
+    const { accessToken, isAuthenticated } = get();
 
-    if (isTokenExpired(accessToken)) {
-      get().logout({ error: "Session expired, please log in again" });
+    if (!isAuthenticated) {
       return false;
+    } else {
+      if (!accessToken || isTokenExpired(accessToken)) {
+        get().logout({ error: "No access token found" });
+        return false;
+      }
     }
 
     return true;
@@ -139,7 +141,7 @@ export const useAuthStore = create((set, get) => ({
 
   startLogoutTimer: () => {
     const { accessToken, clearLogoutTimer } = get();
-    
+
     if (!accessToken || isTokenExpired(accessToken)) {
       return;
     }
@@ -147,13 +149,13 @@ export const useAuthStore = create((set, get) => ({
     try {
       const decoded = jwtDecode(accessToken);
       const expiresIn = decoded.exp * 1000 - Date.now();
-      
+
       clearLogoutTimer();
-      
+
       const timerId = setTimeout(() => {
         get().logout({ error: "Session expired, please log in again" });
       }, expiresIn);
-      
+
       set({ logoutTimer: timerId });
     } catch (error) {
       console.error("Failed to start logout timer:", error);
@@ -172,7 +174,7 @@ export const useAuthStore = create((set, get) => ({
   getTokenExpirationTime: () => {
     const { accessToken } = get();
     if (!accessToken) return null;
-    
+
     try {
       const decoded = jwtDecode(accessToken);
       return new Date(decoded.exp * 1000);
@@ -185,7 +187,7 @@ export const useAuthStore = create((set, get) => ({
   getTimeUntilExpiration: () => {
     const { accessToken } = get();
     if (!accessToken) return 0;
-    
+
     try {
       const decoded = jwtDecode(accessToken);
       return Math.max(0, decoded.exp * 1000 - Date.now());
@@ -198,7 +200,7 @@ export const useAuthStore = create((set, get) => ({
   refreshAuthState: () => {
     const token = getTokenFromStorage();
     const { accessToken } = get();
-    
+
     if (token !== accessToken) {
       if (token && !isTokenExpired(token)) {
         try {

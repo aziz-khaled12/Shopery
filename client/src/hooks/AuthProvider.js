@@ -14,34 +14,12 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     userId,
     user,
-    setUser,
     clearUser,
     accessToken,
-    logout 
   } = useAuthStore();
   
   // Use React Query to fetch user data
-  const userQuery = useUser({
-    enabled: (isAuthenticated && !!userId && !user) || false, // Only fetch if authenticated and userId exists
-    onSuccess: (userData) => {
-      console.log("✅ AuthProvider: User data fetched, storing in auth store");
-      setUser(userData);
-    },
-    onError: (error) => {
-      console.error("❌ AuthProvider: Failed to fetch user data:", error);
-      // If user fetch fails with auth error, logout
-      if (error?.response?.status === 401 || error?.response?.status === 403) {
-        logout({ error: "Session expired, please log in again" });
-      }
-    },
-    retry: (failureCount, error) => {
-      // Don't retry on auth errors
-      if (error?.response?.status === 401 || error?.response?.status === 403) {
-        return false;
-      }
-      return failureCount < 2;
-    }
-  });
+  const userQuery = useUser();
   
   // Initialize auth on app start
   useEffect(() => {

@@ -34,6 +34,26 @@ export const uploadBlogPreviewImage = async (image) => {
     }
 };
 
-export const createBlog = async (blogData) => {};
+export const createBlog = async (blogData) => {
+  console.log("Creating blog with data:", blogData);
+  if (!blogData) {
+    throw new Error("Blog data is required");
+  }
+  try {
+    const res = await axiosInstance.post("/seller/blogs/save", blogData);
+    return res.data.blog;
+  } catch (error) {
+    console.error("Error creating blog:", error);
+    throw error;
+  }
+};
 
-export const modifyBlog = async (blogData) => {};
+export const publishBlog = async (blogId) => {
+  try {
+    const res = await axiosInstance.put(`/seller/blogs/publish/${blogId}`);
+    return res.data.blogs;
+  } catch (error) {
+    console.error("Error publishing blog:", error);
+    throw error;
+  }
+};

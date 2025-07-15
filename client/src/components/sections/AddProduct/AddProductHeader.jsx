@@ -1,4 +1,4 @@
-import { Eye, Save, Package } from "lucide-react";
+import { Eye, Save, Package, Plus } from "lucide-react";
 import { IconButton } from "../../ui";
 
 const AddProductHeader = ({
@@ -33,13 +33,8 @@ const AddProductHeader = ({
         <IconButton onClick={handleSave} icon={<Save />} start>
           Save Draft
         </IconButton>
-        <IconButton
-          onClick={handlePublish}
-          icon={<Package />}
-          start
-          variant="primary"
-        >
-          Publish Product
+        <IconButton onClick={handlePublish} icon={<Plus />} start>
+          Publish
         </IconButton>
       </div>
     </header>

@@ -1,11 +1,12 @@
 import React from "react";
-import CheckoutForm from "../features/forms/CheckoutForm";
-import CheckoutItem from "../features/cart/checkout-item";
+
 import Apple from "/Apple.png";
 import BigApple from "/BigApple.png";
 import { Button, Divider, Input } from "../components/ui";
 import PaymentMethods from "../components/sections/Checkout/PaymentMethods";
 import useCartStore from "../store/cartStore";
+import { CheckoutForm } from "../components/forms";
+import { CheckoutItem } from "../components/cart";
 
 const Checkout = () => {
 

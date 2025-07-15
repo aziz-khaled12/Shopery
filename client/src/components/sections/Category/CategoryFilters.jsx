@@ -1,11 +1,7 @@
 import React from "react";
-import {
-  CategoriesFilter,
-  PriceFilter,
-  RatingFilter,
-  TagsFilter,
-} from "../../../features";
+
 import { Divider } from "../../ui";
+import { CategoriesFilter, PriceFilter, RatingFilter, TagsFilter } from "../../filters";
 
 const CategoryFilters = () => {
   return (

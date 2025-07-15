@@ -2,8 +2,8 @@ import React from "react";
 import BigBannerImage from "/BigBanner.png";
 import SmallBannerImage from "/SmallBanner1.png";
 import SmallBanner2Image from "/SmallBanner2.png";
-import { HeroBigCard, HeroSmallCard, HeroSmallCard2 } from "../../../features";
 import Benefits from "./Benefits";
+import { HeroBigCard, HeroSmallCard, HeroSmallCard2 } from "../../cards";
 const HeroSection = () => {
   return (
     <div className="sm:px-page px-6">

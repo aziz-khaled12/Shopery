@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Logo from "/Logo.png";
 import { Input } from "../../ui";
 import { Heart, ShoppingCart } from "lucide-react";
-import { CartSlide } from "../../../features";
 import { useNavigate } from "react-router-dom";
+import { CartSlide } from "../../cart";
 
 const SearchBar = () => {
   const [isCartSlideOpen, setIsCartSlideOpen] = useState(false);

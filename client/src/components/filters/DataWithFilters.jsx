@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { GridContainer, IconButton, Pagination, Select } from "../../components/ui";
 import { Settings2 } from "lucide-react";
 import CategoryFilters from "../../components/sections/Category/CategoryFilters";
-import { ProductCard } from "../../features";
-import NewsCard from "../cards/NewsCard";
+import { NewsCard, ProductCard } from "../cards";
 
 
 const DataWithFilters = ({ data, type = "products" }) => {

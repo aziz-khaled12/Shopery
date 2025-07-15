@@ -13,10 +13,15 @@ import MarkdownEditor from "../markdown/MarkdownEditor";
 import MarkdownPreview from "../markdown/MarkdownPreview";
 import { useCategories } from "../hooks/queries/useCategories";
 import { useTags } from "../hooks/queries/useTags";
+import { useAuthStore } from "../store/authStore";
+import { useSaveBlog } from "../hooks/mutations/useBlogs";
 
 const AddBlog = () => {
   const [previewMode, setPreviewMode] = useState(false);
+  const saveBlog = useSaveBlog().mutate;
+  const { userId } = useAuthStore();
   const [formData, setFormData] = useState({
+    creatorId: userId,
     title: "",
     content: "**Hello**", // Initialize with markdown content
     category: "",
@@ -38,9 +43,21 @@ const AddBlog = () => {
     return true;
   };
 
-  const handleSave = () => validateForm() && console.log("Saved:", formData);
-  const handlePublish = () =>
-    validateForm() && console.log("Published:", formData);
+  const handleSave = () => {
+    const isValid = validateForm();
+    if (!isValid) {
+      console.error("Please fill in all required fields.");
+    }
+    saveBlog(formData);
+  };
+
+  const handlePublish = () => {
+    const isValid = validateForm();
+    if (!isValid) {
+      console.error("Please fill in all required fields.");
+    }
+    saveBlog({ ...formData, isPublished: true });
+  };
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];

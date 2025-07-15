@@ -23,9 +23,10 @@ const ProductModal = () => {
     useProductModalStore();
   const [count, setCount] = useState(0);
   const { addToCart } = useCartStore();
-
+  
   if (!product) return null;
-
+  
+  const images = [product.previewImage, ...product.images.map((img) => img)];
   return (
     <Modal
       open={isOpen}
@@ -36,13 +37,13 @@ const ProductModal = () => {
     >
       <section className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl 2xl:min-w-7xl">
         <div className="w-full lg:w-1/2">
-          <ImageSlider images={product.images} />
+          <ImageSlider images={images} />
         </div>
 
         <div className="w-full lg:w-1/2">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
             <h1 className="text-2xl sm:text-3xl font-semibold">
-              {product.title}
+              {product.name}
             </h1>
             <div className="text-sm rounded-sm text-primary px-2 py-1 bg-primary/10 w-fit">
               In Stock
@@ -71,7 +72,13 @@ const ProductModal = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
             <div className="gap-1 flex items-center">
-              <span className={` text-lg sm:text-xl ${product.discount.isActive ? "text-gray-300 line-through" : "text-gray-900"}  `}>
+              <span
+                className={` text-lg sm:text-xl ${
+                  product.discount.isActive
+                    ? "text-gray-300 line-through"
+                    : "text-gray-900"
+                }  `}
+              >
                 ${product.price}
               </span>
               {product.discount.isActive && (
@@ -93,7 +100,7 @@ const ProductModal = () => {
             <div className="flex items-center justify-between gap-4">
               <div className="text-sm">
                 Brand:{" "}
-                <span className="text-hard-primary font-medium">Organic</span>
+                <span className="text-hard-primary font-medium">{product.brand}</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm">Share Item: </span>
@@ -129,13 +136,13 @@ const ProductModal = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-6 mb-3">
             <div className="text-sm font-medium">Category:</div>
-            <div className="text-sm text-gray-500">{product.category}</div>
+            <div className="text-sm text-gray-500">{product.category.name}</div>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-start gap-2">
             <div className="text-sm font-medium">Tags:</div>
             <div className="text-sm text-gray-500">
-              {product.tags.map((tag) => tag).join(", ")}
+              {product.tags.map((tag) => tag.name).join(", ")}
             </div>
           </div>
         </div>

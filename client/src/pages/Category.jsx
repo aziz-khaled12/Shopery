@@ -1,6 +1,6 @@
 import React from "react";
 import { products } from "../consts/ProductsConsts";
-import DataWithFilters from "../features/filters/DataWithFilters";
+import { DataWithFilters } from "../components/filters";
 
 const Category = () => {
 

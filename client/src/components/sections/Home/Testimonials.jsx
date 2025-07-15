@@ -3,13 +3,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Avatar1 from "/Avatar1.png";
 import Avatar2 from "/Avatar2.png";
 import Avatar3 from "/Avatar3.png";
-import { TestimonialCard } from "../../../features";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { IconButton2 } from "../../ui";
 import { Navigation } from "swiper/modules";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { TestimonialCard } from "../../cards";
 
 const Testimonials = () => {
   const swiperRef = useRef(null);

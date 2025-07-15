@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
-import { NewsCard } from "../../../features";
 import { IconButton2 } from "../../ui";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { homeBlogs } from "../../../consts/BlogsConsts";
+import { NewsCard } from "../../cards";
 const LatestNews = () => {
 
   const swiperRef = useRef(null);

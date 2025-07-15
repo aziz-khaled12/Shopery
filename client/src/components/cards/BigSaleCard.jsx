@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
-import { Countdown, IconButton } from "../../components/ui";
+import { Countdown, IconButton } from "../ui";
 
 const BigSaleCard = ({
   image,

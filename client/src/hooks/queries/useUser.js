@@ -11,6 +11,7 @@ export const useUser = (options = {}) => {
     queryFn: () => fetchUser(userId),
     enabled: isAuthenticated && !!userId || false, 
     staleTime: 5 * 60 * 1000, // 5 minutes
+    
     retry: (failureCount, error) => {
       // Don't retry on 401/403 errors
       if (error?.response?.status === 401 || error?.response?.status === 403) {
@@ -32,6 +33,8 @@ export const useAutoFetchUser = () => {
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
   });
+
+  console.log("user: ", userQuery)
   
   // Prefetch user data when userId changes (login/token refresh)
   useEffect(() => {
