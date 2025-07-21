@@ -41,7 +41,7 @@ const images = [formData.previewImage?.previewUrl, ...formData.images.map(img =>
         <ImageSlider images={images} />
       </div>
 
-      <div className="w-full lg:w-1/2">
+      <div className="w-full lg:w-1/2 pr-4">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
           <h1 className="text-2xl sm:text-3xl font-semibold">
             {formData.title}

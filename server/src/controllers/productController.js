@@ -5,6 +5,7 @@ const {
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Product = require("../models/Product");
 const createUploader = require("../middleware/cloudinaryStorage");
+const Category = require("../models/Category");
 
 // Product Image Upload Handlers
 exports.uploadProductImagesHandler = async (req, res, next) => {
@@ -72,10 +73,9 @@ exports.uploadProductPreviewImageHandler = async (req, res, next) => {
 exports.createProduct = catchAsyncErrors(async (req, res) => {
   const newProduct = req.body;
 
-  const product = await Product.create(newProduct)
-    .populate("category")
-    .populate("tags");
-
+  // First create the product
+  const product = await Product.create(newProduct);
+  
   if (!product) {
     return res.status(400).json({
       success: false,
@@ -83,7 +83,15 @@ exports.createProduct = catchAsyncErrors(async (req, res) => {
     });
   }
 
-  res.status(201).json(product);
+  // Then populate the references in a separate query
+  const populatedProduct = await Product.findById(product._id)
+    .populate("category")
+    .populate("tags");
+
+  res.status(201).json({
+    success: true,
+    product: populatedProduct
+  });
 });
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
@@ -180,11 +188,26 @@ exports.deleteProduct = catchAsyncErrors(async (req, res) => {
 });
 
 exports.getProductsByCategory = catchAsyncErrors(async (req, res) => {
-  const category = req.params.category;
-  const products = await Product.find({ category })
-    .sort({ createdAt: -1 })
-    .populate("category")
-    .populate("tags");
+  const { category } = req.params;
+
+  const fullCategory = await Category.findOne({ name: category });
+  const categoryId = fullCategory._id;
+
+  console.log("category id: ", categoryId)
+
+  const page = parseInt(req.query.page) || 1; // Default to page 1
+  const limit = parseInt(req.query.limit) || 10; // Default 10 items per page
+  const skip = (page - 1) * limit;
+
+  const [products, totalProducts] = await Promise.all([
+    Product.find({ category: categoryId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate("category")
+      .populate("tags"),
+    Product.countDocuments({ category: categoryId }),
+  ]);
 
   if (!products || products.length === 0) {
     return res.status(404).json({
@@ -196,6 +219,12 @@ exports.getProductsByCategory = catchAsyncErrors(async (req, res) => {
   res.status(200).json({
     success: true,
     products,
+    pagination: {
+      total: totalProducts,
+      page,
+      pages: Math.ceil(totalProducts / limit),
+      limit,
+    },
   });
 });
 
@@ -229,25 +258,54 @@ exports.searchProducts = catchAsyncErrors(async (req, res) => {
 });
 
 exports.filterProducts = catchAsyncErrors(async (req, res) => {
-  const { category, priceRange, rating } = req.query;
+  const {
+    category,
+    priceRange,
+    rating,
+    tags,
+    page = 1,
+    limit = 10,
+  } = req.query;
 
   let filter = {};
 
+  // Category filter
   if (category) {
     filter.category = category;
   }
+
+  // Price range filter
   if (priceRange) {
     const [minPrice, maxPrice] = priceRange.split(",").map(Number);
-    filter.price = { $gte: minPrice, $lte: maxPrice };
+    if (!isNaN(minPrice) && !isNaN(maxPrice)) {
+      filter.price = { $gte: minPrice, $lte: maxPrice };
+    }
   }
-  if (rating) {
+
+  // Rating filter
+  if (rating && !isNaN(rating)) {
     filter.rating = { $gte: Number(rating) };
   }
 
+  // Tags filter - handles both single ID and comma-separated IDs
+  if (tags) {
+    const tagIds = Array.isArray(tags) ? tags : tags.split(",");
+    if (tagIds.length > 0) {
+      filter.tags = { $in: tagIds };
+    }
+  }
+
+  // Add pagination
+  const skip = (page - 1) * limit;
+
   const products = await Product.find(filter)
     .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(Number(limit))
     .populate("category")
     .populate("tags");
+
+  const totalProducts = await Product.countDocuments(filter);
 
   if (!products || products.length === 0) {
     return res.status(404).json({
@@ -259,6 +317,12 @@ exports.filterProducts = catchAsyncErrors(async (req, res) => {
   res.status(200).json({
     success: true,
     products,
+    pagination: {
+      total: totalProducts,
+      page: Number(page),
+      pages: Math.ceil(totalProducts / limit),
+      limit: Number(limit),
+    },
   });
 });
 

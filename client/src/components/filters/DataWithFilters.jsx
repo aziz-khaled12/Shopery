@@ -1,24 +1,39 @@
 import React, { useState } from "react";
-import { GridContainer, IconButton, Pagination, Select } from "../../components/ui";
-import { Settings2 } from "lucide-react";
+import {
+  GridContainer,
+  IconButton,
+  Pagination,
+  Select,
+} from "../../components/ui";
+import { LoaderCircle, Settings2 } from "lucide-react";
 import CategoryFilters from "../../components/sections/Category/CategoryFilters";
 import { NewsCard, ProductCard } from "../cards";
+import { useFetchCategoryProducts } from "../../hooks/queries/useProducts";
 
-
-const DataWithFilters = ({ data, type = "products" }) => {
+const DataWithFilters = ({ category, type = "products" }) => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(1); // Default items per page
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; 
+  const {
+    data: productsData,
+    isLoading,
+    isError,
+    error,
+  } = useFetchCategoryProducts(category, {
+    page,
+    limit,
+  });
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
     window.scrollTo({ top: 300, behavior: "smooth" });
   };
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+  // Show error state
+  if (isError) {
+    return <div>Error loading products: {error.message}</div>;
+  }
 
   return (
     <div className="w-full px-6 sm:px-page space-y-6">
@@ -47,7 +62,9 @@ const DataWithFilters = ({ data, type = "products" }) => {
           </div>
 
           <div className="whitespace-nowrap">
-            <span className="font-semibold text-black mr-1">52</span>
+            <span className="font-semibold text-black mr-1">
+              {!isLoading && productsData.pagination.total}
+            </span>
             Products Found
           </div>
         </div>
@@ -70,34 +87,46 @@ const DataWithFilters = ({ data, type = "products" }) => {
 
         {/* Products grid */}
         <div
-          className={`transition-all duration-300 ease-in-out ${
+          className={`transition-all duration-300 ease-in-out h-full ${
             isFiltersOpen ? "w-full md:w-3/4" : "w-full"
           }`}
         >
-          {type === "products" && (
+          {isLoading ? (
+            <div className="w-full h-full min-h-[40vh] bg-white flex items-center justify-center">
+              <LoaderCircle className="animate-spin h-6 w-6 text-primary" />
+            </div>
+          ) : type === "products" ? (
             <GridContainer cols={3} gap={4}>
-              {currentData.map((product, index) => (
+              {productsData.products.map((product, index) => (
                 <ProductCard
-                  key={index}
+                  key={product._id || index}
                   product={product}
                   className="rounded-lg"
                 />
               ))}
             </GridContainer>
+          ) : (
+            type === "blogs" && (
+              <GridContainer cols={2} gap={4}>
+                {productsData.products.map((blog, index) => (
+                  <NewsCard
+                    key={blog._id || index}
+                    blog={blog}
+                    className="rounded-lg"
+                  />
+                ))}
+              </GridContainer>
+            )
           )}
-          {type === "blogs" && (
-            <GridContainer cols={2} gap={4}>
-              {currentData.map((blog, index) => (
-                <NewsCard key={index} blog={blog} className="rounded-lg" />
-              ))}
-            </GridContainer>
+
+          {!isLoading && (
+            <Pagination
+              currentPage={page}
+              totalPages={productsData.pagination.pages}
+              onPageChange={handlePageChange}
+              className="mt-8"
+            />
           )}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            className="mt-8"
-          />
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import {
   ProductImagesSection,
 } from "../components/sections/AddProduct";
 import { useAuthStore } from "../store/authStore";
+import { Divider } from "../components/ui";
 
 const AddProduct = () => {
   const { userId } = useAuthStore();
@@ -125,33 +126,37 @@ const AddProduct = () => {
   }, [formData.discount.percentage]);
 
   return (
-    <div className="min-h-screen px-6 sm:px-page">
+    <div className="min-h-screen border border-gray-200 pb-6">
       <AddProductHeader
         previewMode={previewMode}
         setPreviewMode={setPreviewMode}
         handleSave={handleSave}
         handlePublish={handlePublish}
       />
+    
 
       {!previewMode ? (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <main className="lg:col-span-2 space-y-6">
+        <div className="grid grid-cols-1 gap-6 px-6">
+
             <ProductInformationSection
               formData={formData}
               handleInputChange={handleInputChange}
             />
+            <Divider />
             <PricingInventorySection
               formData={formData}
               handleInputChange={handleInputChange}
               calculateDiscountedPrice={calculateDiscountedPrice}
             />
-          </main>
+            <Divider />
 
-          <aside className="space-y-6">
+
+
             <OrganizationSection
               formData={formData}
               handleInputChange={handleInputChange}
             />
+            <Divider />
             <ProductImagesSection
               formData={formData}
               handlePreviewImageUpload={handlePreviewImageUpload}
@@ -159,7 +164,7 @@ const AddProduct = () => {
               removeAdditionalImage={removeAdditionalImage}
               removePreviewImage={removePreviewImage}
             />
-          </aside>
+
         </div>
       ) : (
         <PreviewProduct formData={formData} />

@@ -8,9 +8,9 @@ const PricingInventorySection = ({
   calculateDiscountedPrice,
 }) => {
   return (
-    <section className="bg-white rounded-xl shadow-sm p-6">
+    <section className="bg-white">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-slate-800">
+        <h2 className="text-xl font-medium">
           Pricing & Inventory
         </h2>
         <p className="text-slate-500">

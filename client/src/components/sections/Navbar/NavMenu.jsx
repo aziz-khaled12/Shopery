@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { DropdownMenu } from "../../ui";
 import { PhoneCall, Menu } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const NavMenu = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate()
 
   const navOptions = [
     {
@@ -44,7 +46,7 @@ const NavMenu = () => {
           <button className="text-sm lg:text-base font-medium hover:text-primary transition-all duration-200 cursor-pointer">
             About Us
           </button>
-          <button className="text-sm lg:text-base font-medium hover:text-primary transition-all duration-200 cursor-pointer">
+          <button className="text-sm lg:text-base font-medium hover:text-primary transition-all duration-200 cursor-pointer" onClick={() => navigate("/product")}>
             Contact Us
           </button>
         </div>
@@ -85,6 +87,7 @@ const NavMenu = () => {
             <button className="text-base font-medium hover:text-primary py-2 text-left">
               About Us
             </button>
+
             <button className="text-base font-medium hover:text-primary py-2 text-left">
               Contact Us
             </button>

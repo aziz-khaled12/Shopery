@@ -66,19 +66,14 @@ const AddBlog = () => {
   };
 
   return (
-    <div className="min-h-screen px-6 sm:px-page">
+    <div className="min-h-screen border border-gray-200 pb-6">
       {/* Header */}
-      <header className="flex flex-col md:flex-row justify-between gap-4 mb-8">
+      <header className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-8 border-b border-gray-200 py-4 px-6">
         <div className="flex items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h1 className="text-2xl font-medium text-slate-900">
               {previewMode ? "Preview Post" : "Create New Post"}
             </h1>
-            <p className="text-slate-500">
-              {previewMode
-                ? "Review your content before publishing"
-                : "Share your knowledge with the world"}
-            </p>
           </div>
         </div>
 
@@ -86,34 +81,37 @@ const AddBlog = () => {
           <IconButton
             onClick={() => setPreviewMode(!previewMode)}
             icon={<Eye />}
+            size="small"
             start
           >
             {previewMode ? "Edit" : "Preview"}
           </IconButton>
-          <IconButton onClick={handleSave} icon={<Save />} start>
+          <IconButton onClick={handleSave} icon={<Save />} size="small" start>
             Save Draft
           </IconButton>
-          <IconButton onClick={handlePublish} icon={<Plus />} start>
+          <IconButton
+            onClick={handlePublish}
+            icon={<Plus />}
+            size="small"
+            start
+          >
             Publish
           </IconButton>
         </div>
       </header>
 
       {!previewMode ? (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 px-6">
           {/* Main Content */}
-          <main className="lg:col-span-2 space-y-6">
-            <section className="bg-white rounded-xl shadow-sm p-6 h-full">
+          <main className=" space-y-6">
+            <section className="bg-white">
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-slate-800">
-                  Content
-                </h2>
-                <p className="text-slate-500">Craft your engaging blog post</p>
+                <h2 className="text-xl font-medium  ">Content</h2>
               </div>
 
               <div className="space-y-6 h-full">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-base font-medium text-slate-700 mb-1">
                     Title
                   </label>
                   <Input
@@ -124,10 +122,8 @@ const AddBlog = () => {
                   />
                 </div>
 
-                <Divider />
-
                 <div className="h-full">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-base font-medium text-slate-700 mb-1">
                     Content
                   </label>
                   <MarkdownEditor
@@ -139,21 +135,15 @@ const AddBlog = () => {
                 </div>
               </div>
             </section>
-          </main>
-
-          {/* Sidebar */}
-          <aside className="space-y-6">
-            <section className="bg-white rounded-xl shadow-sm p-6">
+            <Divider />
+            <section className="bg-white">
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-slate-800">
-                  Settings
-                </h2>
-                <p className="text-slate-500">Configure your post details</p>
+                <h2 className="text-xl font-medium  ">Settings</h2>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-base font-medium text-slate-700 mb-1">
                     Category
                   </label>
                   <Select
@@ -167,7 +157,7 @@ const AddBlog = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-base font-medium text-slate-700 mb-1">
                     Tags
                   </label>
                   <ChipSelect
@@ -178,21 +168,19 @@ const AddBlog = () => {
                 </div>
               </div>
             </section>
-
-            <section className="bg-white rounded-xl shadow-sm p-6">
+            <Divider />
+            <section className="bg-white">
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-slate-800">
-                  Featured Image
+                <h2 className="text-xl font-medium ">
+                  Preview Image
                 </h2>
-                <p className="text-slate-500">
-                  Add a visually compelling image
-                </p>
+
               </div>
 
               <label className="block cursor-pointer">
-                <div className="border-2 border-dashed border-slate-200 rounded-lg p-6 text-center transition-colors hover:border-blue-300 hover:bg-blue-50/50">
+                <div className="border-2 border-dashed border-slate-200 rounded-lg p-6 bg-gray-50 text-center transition-colors hover:border-blue-300 hover:bg-blue-50/50">
                   <Upload className="mx-auto h-10 w-10 text-slate-400 mb-3" />
-                  <p className="text-sm font-medium text-slate-600 mb-1">
+                  <p className="text-base font-medium text-slate-600 mb-1">
                     Upload an image
                   </p>
                   <p className="text-xs text-slate-500">PNG, JPG up to 10MB</p>
@@ -215,11 +203,11 @@ const AddBlog = () => {
                 </div>
               )}
             </section>
-          </aside>
+          </main>
         </div>
       ) : (
         /* Preview Mode */
-        <article className="max-w-3xl mx-auto bg-white rounded-xl shadow-sm overflow-hidden">
+        <article className="max-w-3xl mx-auto bg-white overflow-hidden">
           {formData.previewImage ? (
             <img
               src={formData.previewImage}
@@ -238,14 +226,14 @@ const AddBlog = () => {
           <div className="p-6">
             <div className="flex flex-wrap gap-2 mb-4">
               {formData.category && (
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-base font-medium">
                   {formData.category}
                 </span>
               )}
               {formData.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-0.5 bg-slate-100 text-slate-700 rounded-full text-sm"
+                  className="px-2.5 py-0.5 bg-slate-100 text-slate-700 rounded-full text-base"
                 >
                   #{tag}
                 </span>
@@ -256,7 +244,7 @@ const AddBlog = () => {
               {formData.title || "Your Blog Title Here"}
             </h1>
 
-            <div className="flex items-center gap-3 text-slate-500 text-sm mb-6">
+            <div className="flex items-center gap-3 text-slate-500 text-base mb-6">
               <span>By Author Name</span>
               <span>•</span>
               <span>{new Date().toLocaleDateString()}</span>

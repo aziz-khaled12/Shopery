@@ -22,6 +22,24 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// RESPONSE INTERCEPTOR - Handle auth errors
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      console.warn("Unauthorized. Logging out...");
+
+      // Use the auth store logout method instead of manual cleanup
+      const { logout } = useAuthStore.getState();
+      logout();
+
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 // Optional: Export a function to manually refresh the token in headers
 export const refreshAxiosToken = () => {

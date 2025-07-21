@@ -5,7 +5,7 @@ import { useProducts } from "../../../hooks/queries/useProducts";
 import { ProductCard } from "../../cards";
 
 const PopularProducts = () => {
-  const { data } = useProducts({category: "popular-products"});
+  const { data } = useProducts({section: "popular-products"});
   const products = data || [];
 
   return (

@@ -7,9 +7,9 @@ const OrganizationSection = ({ formData, handleInputChange }) => {
   const tags = useTags().data
 
   return (
-    <section className="bg-white rounded-xl shadow-sm p-6">
+    <section className="bg-white">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-slate-800">Organization</h2>
+        <h2 className="text-xl font-medium">Organization</h2>
         <p className="text-slate-500">Categorize and tag your product</p>
       </div>
 

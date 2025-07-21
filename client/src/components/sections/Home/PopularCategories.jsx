@@ -13,7 +13,7 @@ const PopularCategories = () => {
       <GridContainer gap={6} cols={6}>
         {!isPending && categories.map((category) => (
           <CategoryCard
-            key={category.id}
+            key={category.value}
             title={category.label}
             image={category.image}
           />

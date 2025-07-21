@@ -8,9 +8,9 @@ const ProductImagesSection = ({
   removePreviewImage,
 }) => {
   return (
-    <section className="bg-white rounded-xl shadow-sm p-6">
+    <section className="bg-white">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-slate-800">Product Images</h2>
+        <h2 className="text-xl font-medium">Product Images</h2>
         <p className="text-slate-500">Upload preview and additional images</p>
       </div>
 

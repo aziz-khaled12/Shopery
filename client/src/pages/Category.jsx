@@ -1,12 +1,11 @@
 import React from "react";
-import { products } from "../consts/ProductsConsts";
 import { DataWithFilters } from "../components/filters";
+import { useParams } from "react-router-dom";
 
 const Category = () => {
-
-
+  const { category } = useParams()
   return (
-    <DataWithFilters data={products} type="products" />
+    <DataWithFilters category={category} type="products" />
   );
 };
 

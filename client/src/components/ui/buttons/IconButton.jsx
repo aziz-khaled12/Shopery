@@ -1,7 +1,7 @@
 import React from "react";
 
 const sizeClassesMap = {
-  small: "px-6 py-2.5 gap-2 text-2xs",
+  small: "px-6 py-2.5 gap-2 sm:text-xs text-2xs",
   medium: "sm:text-sm sm:px-8 gap-3 text-xs px-4 py-3",
   large: "text-base px-10 gap-4 py-4",
 };

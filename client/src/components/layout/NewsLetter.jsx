@@ -5,9 +5,9 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 const NewsLetter = () => {
   return (
     <div className="flex-col items-center justify-center flex w-full sm:px-page px-6 py-[60px] bg-gray-bg xl:flex-row xl:items-center xl:justify-between text-center xl:text-left gap-6">
-      <div className="w-3/5 xl:w-2/5">
-        <h1 className="text-3xl font-semibold">Subscribe to our newsletter</h1>
-        <p className="text-sm font-normal text-gray-400 mt-1">
+      <div className="w-4/5 sm:w-3/5 xl:w-2/5">
+        <h1 className="sm:text-3xl text-2xl font-semibold">Subscribe to our newsletter</h1>
+        <p className="sm:text-sm text-xs font-normal text-gray-400 mt-1">
           Pellentesque eu nibh eget mauris congue mattis mattis nec tellus.
           Phasellus imperdiet elit eu magna.
         </p>

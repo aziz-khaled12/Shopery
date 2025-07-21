@@ -23,12 +23,11 @@ import AddBlog from "./pages/AddBlog";
 import AddProduct from "./pages/AddProduct";
 import Error from "./pages/Error";
 import AddCategoryForm from "./pages/AddCategoryForm";
-import { useAuthStore } from "./store/authStore";
+import { PrivateRoute, PublicRoute, SellerRoute } from "./utils/routes";
 
 const App = () => {
   const { pathname } = useLocation();
   const prevPathname = useRef(pathname);
-
 
   useEffect(() => {
     // Only scroll if pathname actually changed
@@ -38,40 +37,109 @@ const App = () => {
     }
   }, [pathname]);
 
-  const {accessToken} = useAuthStore();
-
-  useEffect(() => {
-    console.log("App mounted with accessToken:", accessToken);
-  }, [accessToken])
-
   return (
     <div className="w-full min-h-screen overflow-hidden">
       <Navbar />
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
-        <Route path="account/register" element={<SignUp />} />
-        <Route path="account/login" element={<Login />} />
-        <Route path="account" element={<Account />}>
+        <Route
+          path="account/register"
+          element={
+            <PublicRoute>
+              <SignUp />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="account/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        {/* Private Routes */}
+        <Route
+          path="account"
+          element={
+            <PrivateRoute>
+              <Account />
+            </PrivateRoute>
+          }
+        >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="history" element={<OrderHistory />} />
           <Route path="wishlist" element={<Wishlist withTitle={false} />} />
           <Route path="cart" element={<ShoppingCart withTitle={false} />} />
           <Route path="settings" element={<Settings />} />
+          <Route
+            path="blogs"
+            element={
+              <SellerRoute>
+                <AddBlog />
+              </SellerRoute>
+            }
+          />
+          <Route
+            path="products"
+            element={
+              <SellerRoute>
+                <AddProduct />
+              </SellerRoute>
+            }
+          />
         </Route>
+
+        <Route
+          path="checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Seller Routes */}
+        <Route
+          path="blog"
+          element={
+            <SellerRoute>
+              <AddBlog />
+            </SellerRoute>
+          }
+        />
+        <Route
+          path="product"
+          element={
+            <SellerRoute>
+              <AddProduct />
+            </SellerRoute>
+          }
+        />
+        <Route
+          path="cat"
+          element={
+            <SellerRoute>
+              <AddCategoryForm />
+            </SellerRoute>
+          }
+        />
+
+        {/* Public Product Routes */}
         <Route
           path="categories/:category/:productId"
           element={<ProductPage />}
         />
-        <Route path="test" element={<Test />} />
+        <Route path="categories/:category" element={<Category />} />
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="cart" element={<ShoppingCart withTitle={true} />} />
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="categories/:category" element={<Category />} />
         <Route path="blogs" element={<Blogs />} />
         <Route path="about" element={<About />} />
-        <Route path="blog" element={<AddBlog />} />
-        <Route path="product" element={<AddProduct />} />
-        <Route path="cat" element={<AddCategoryForm />} />
+        <Route path="test" element={<Test />} />
+
+        {/* Fallback */}
         <Route path="*" element={<Error />} />
       </Routes>
       <ProductModal />

@@ -1,5 +1,6 @@
 import { Input, Select, Textarea } from "../ui";
 
+
 export const checkoutFormFields = [
   {
     name: "firstName",
@@ -51,7 +52,7 @@ export const checkoutFormFields = [
     section: "address",
     options: [
       { label: "United States", value: "US" },
-      { label: "Canada", value: "CA" },
+      { label: "Algeria", value: "DZ" },
     ],
     girdCols: "col-span-12 sm:col-span-6 md:col-span-4", // replaces cols: 4
   },
@@ -63,7 +64,7 @@ export const checkoutFormFields = [
     type: "select",
     required: true,
     section: "address",
-    options: ["Select"],
+    options: [{ lablel: "Tebessa", value: "tebessa" }],
     girdCols: "col-span-12 sm:col-span-6 md:col-span-4", // replaces cols: 4
   },
   {
@@ -130,7 +131,7 @@ export const billingAddressFields = [
     girdCols: "col-span-12 sm:col-span-6 md:col-span-4", // replaces cols: 4
   },
   {
-    name: "companyName",
+    name: "company",
     id: "company-name",
     label: "Company Name (optional)",
     placeholder: "Company name",
@@ -140,7 +141,7 @@ export const billingAddressFields = [
     girdCols: "col-span-12 sm:col-span-12 md:col-span-4", // replaces cols: 4
   },
   {
-    name: "streetAddress",
+    name: "street",
     id: "street-address",
     label: "Street Address",
     placeholder: "Street address",
@@ -150,7 +151,7 @@ export const billingAddressFields = [
     girdCols: "col-span-12", // replaces cols: 12
   },
   {
-    name: "countryRegion",
+    name: "country",
     id: "country-region",
     label: "Country / Region",
     placeholder: "Select a country",
@@ -159,7 +160,7 @@ export const billingAddressFields = [
     section: "address",
     options: [
       { label: "United States", value: "US" },
-      { label: "Canada", value: "CA" },
+      { label: "Algeria", value: "DZ" },
     ],
     girdCols: "col-span-12 sm:col-span-6 md:col-span-4", // replaces cols: 4
   },
@@ -171,7 +172,7 @@ export const billingAddressFields = [
     type: "select",
     required: true,
     section: "address",
-    options: ["Select"],
+    options: [{ label: "Tebessa", value: "tebessa" }],
     girdCols: "col-span-12 sm:col-span-6 md:col-span-4", // replaces cols: 4
   },
   {
@@ -195,7 +196,7 @@ export const billingAddressFields = [
     girdCols: "col-span-12 sm:col-span-6", // replaces cols: 6
   },
   {
-    name: "phoneNumber",
+    name: "phone",
     id: "phone-number",
     label: "Phone number",
     placeholder: "Phone number",
@@ -204,7 +205,6 @@ export const billingAddressFields = [
     section: "contact",
     girdCols: "col-span-12 md:col-span-6", // replaces cols: 6
   },
-
 ];
 
 export const accountSettingsFields = [
@@ -216,7 +216,8 @@ export const accountSettingsFields = [
     type: "text",
     required: false,
     girdCols: "col-span-12", // replaces cols: 12
-  }, {
+  },
+  {
     name: "lastName",
     id: "last-name",
     label: "Last name",
@@ -224,7 +225,8 @@ export const accountSettingsFields = [
     type: "text",
     required: false,
     girdCols: "col-span-12", // replaces cols: 12
-  }, {
+  },
+  {
     name: "email",
     id: "email-address",
     label: "Email Address",
@@ -232,8 +234,9 @@ export const accountSettingsFields = [
     type: "text",
     required: false,
     girdCols: "col-span-12", // replaces cols: 12
-  }, {
-    name: "phoneNumber",
+  },
+  {
+    name: "phone",
     id: "phone-number",
     label: "Phone number",
     placeholder: "Phone number",
@@ -241,7 +244,7 @@ export const accountSettingsFields = [
     required: false,
     girdCols: "col-span-12", // replaces cols: 12
   },
-]
+];
 
 export const changePasswordFields = [
   {
@@ -271,7 +274,7 @@ export const changePasswordFields = [
     required: true,
     girdCols: "col-span-6", // replaces cols: 12
   },
-]
+];
 
 export const renderField = (field, formData, handleChange) => {
   const props = {

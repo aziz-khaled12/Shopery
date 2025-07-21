@@ -2,9 +2,9 @@ import { Input, Textarea, Divider } from "../../ui";
 
 const ProductInformationSection = ({ formData, handleInputChange }) => {
   return (
-    <section className="bg-white rounded-xl shadow-sm p-6">
+    <section className="bg-white">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-slate-800">
+        <h2 className="text-xl font-medium">
           Product Information
         </h2>
         <p className="text-slate-500">

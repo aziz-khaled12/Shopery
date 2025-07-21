@@ -45,6 +45,7 @@ app.use("/api/shared/blogs", sharedBlogRoutes);
 app.use("/api/shared/products", sharedProductRoutes);
 app.use("/api/auth", authRoutes);
 
+
 // server initialization
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

@@ -1,4 +1,4 @@
-import { Heart, History, LayoutDashboard, Settings, ShoppingCart } from "lucide-react";
+import { ClipboardList, FileText, Heart, History, LayoutDashboard, Package, Settings, ShoppingCart } from "lucide-react";
 
 export const navItems = [
     {
@@ -20,6 +20,34 @@ export const navItems = [
         name: "Shopping Cart",
         icon: <ShoppingCart />,
         path: "/account/cart",
+    },
+    {
+        name: "Settings",
+        icon: <Settings />,
+        path: "/account/settings",
+    },
+];
+
+export const sellerNavItems = [
+    {
+        name: "Dashboard",
+        icon: <LayoutDashboard />,
+        path: "/account/dashboard",
+    },
+    {
+        name: "Orders",
+        icon: <ClipboardList />,
+        path: "/account/orders",
+    },
+    {
+        name: "Products",
+        icon: <Package />,
+        path: "/account/products",
+    },
+    {
+        name: "Blogs",
+        icon: <FileText />,
+        path: "/account/blogs",
     },
     {
         name: "Settings",

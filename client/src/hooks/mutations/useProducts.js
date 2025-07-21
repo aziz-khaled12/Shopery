@@ -13,3 +13,16 @@ export const useCreateProduct = (product, options = {}) => {
     ...options,
   });
 };
+
+export const useNigga = (product, options = {}) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => createProduct(product),
+    mutationKey: ["products"],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+    ...options,
+  });
+};

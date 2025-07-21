@@ -8,17 +8,12 @@ const AddProductHeader = ({
   handlePublish,
 }) => {
   return (
-    <header className="flex flex-col md:flex-row justify-between gap-4 mb-8">
+    <header className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-8 border-b border-gray-200 py-4 px-6">
       <div className="flex items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">
+          <h1 className="text-2xl font-medium text-slate-900">
             {previewMode ? "Preview Product" : "Add New Product"}
           </h1>
-          <p className="text-slate-500">
-            {previewMode
-              ? "Review your product before publishing"
-              : "Create and manage your product listing"}
-          </p>
         </div>
       </div>
 
@@ -27,13 +22,14 @@ const AddProductHeader = ({
           onClick={() => setPreviewMode(!previewMode)}
           icon={<Eye />}
           start
+          size="small"
         >
           {previewMode ? "Edit" : "Preview"}
         </IconButton>
-        <IconButton onClick={handleSave} icon={<Save />} start>
+        <IconButton onClick={handleSave} icon={<Save />} size="small" start>
           Save Draft
         </IconButton>
-        <IconButton onClick={handlePublish} icon={<Plus />} start>
+        <IconButton onClick={handlePublish} icon={<Plus />} size="small" start>
           Publish
         </IconButton>
       </div>

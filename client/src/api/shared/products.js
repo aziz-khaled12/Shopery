@@ -14,9 +14,9 @@ export const fetchProductById = async (productId) => {
   }
 };
 
-export const fetchProducts = async (category) => {
+export const fetchProducts = async (section) => {
   try {
-    const url = `/customer/products/${category || ""}`;
+    const url = `/customer/products/${section || ""}`;
     const res = await axiosInstance.get(url);
     return res.data;
   } catch (error) {
@@ -24,3 +24,14 @@ export const fetchProducts = async (category) => {
     throw error;
   }
 };
+
+export const fetchCategoryProducts = async (category, page, limit) => {
+    try {
+    const url = `/shared/products/category/${category}?page=${page}&limit=${limit}`;
+    const res = await axiosInstance.get(url);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching popular products:", error);
+    throw error;
+  }
+}

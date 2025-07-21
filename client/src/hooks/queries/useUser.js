@@ -3,14 +3,15 @@ import { fetchUser } from "../../api/shared/user";
 import { useAuthStore } from "../../store/authStore";
 import { useEffect } from "react";
 
-export const useUser = (options = {}) => {
-  const { userId, isAuthenticated } = useAuthStore();
+export const useFetchUser = (options = {}) => {
+  const { userId, isAuthenticated, user } = useAuthStore();
   
   return useQuery({
     queryKey: ["user", userId],
     queryFn: () => fetchUser(userId),
-    enabled: isAuthenticated && !!userId || false, 
+    enabled: isAuthenticated && userId && !user || false, 
     staleTime: 5 * 60 * 1000, // 5 minutes
+    
     
     retry: (failureCount, error) => {
       // Don't retry on 401/403 errors
@@ -23,12 +24,14 @@ export const useUser = (options = {}) => {
   });
 };
 
+
+
 // Hook that automatically fetches user data when authenticated
 export const useAutoFetchUser = () => {
   const { userId, isAuthenticated } = useAuthStore();
   const queryClient = useQueryClient();
   
-  const userQuery = useUser({
+  const userQuery = useFetchUser({
     // Keep data fresh
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,

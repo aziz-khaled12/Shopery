@@ -1,59 +1,67 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const billingInfoSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: "User",
+    required: true,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
   company: {
     type: String,
-    trim: true
+    trim: true,
   },
   street: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   country: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   state: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   zipCode: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
     required: true,
     trim: true,
-    lowercase: true
+    lowercase: true,
   },
   phone: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   modifiedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Update modifiedAt before saving
-billingInfoSchema.pre('save', function(next) {
+billingInfoSchema.pre("save", function (next) {
   this.modifiedAt = new Date();
   next();
 });
 
-const BillingInfo = mongoose.model('BillingInfo', billingInfoSchema);
+const BillingInfo = mongoose.model("BillingInfo", billingInfoSchema);
 
 module.exports = BillingInfo;

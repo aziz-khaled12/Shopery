@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const BillingInfo = require('../models/BillingInfo');
 const Role = require('../models/Role');
 const { validationResult } = require('express-validator');
 
@@ -29,7 +30,7 @@ exports.signup = async (req, res) => {
     }
 
     // Find customer role
-    const customerRole = await Role.findOne({ name: 'seller' });
+    const customerRole = await Role.findOne({ name: 'customer' });
     if (!customerRole) {
       return res.status(500).json({ message: 'Customer role not configured' });
     }
@@ -39,11 +40,18 @@ exports.signup = async (req, res) => {
       email,
       password,
       role: customerRole._id,
-      first_name: req.body.first_name || '',
-      last_name: req.body.last_name || ''
+      firstName: req.body.firstName || '',
+      lastName: req.body.lastName || ''
     });
 
     await newUser.save();
+
+    const billingInfo = new BillingInfo({
+      userId: newUser._id
+    })
+
+    await billingInfo.save()
+    await User.findByIdAndUpdate(newUser._id, {billingAddress: billingInfo._id})
 
     // Generate token
     const token = generateToken(newUser._id, 'customer');
@@ -53,7 +61,7 @@ exports.signup = async (req, res) => {
       email: newUser.email,
       role: 'customer',
       token,
-      tokenExpiration: '7d'
+      tokenExpiration: '2h'
     });
   } catch (err) {
     console.error(err);

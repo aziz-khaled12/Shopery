@@ -225,6 +225,16 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
+  getUserRole: () => {
+    const { user } = get();
+    if (user) {
+      return user.role.name;
+    }
+    else{
+      return null
+    }
+  },
+
   // Method to set user data
   setUser: (userData) => set({ user: userData }),
 
