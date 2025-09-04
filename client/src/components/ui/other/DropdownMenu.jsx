@@ -13,7 +13,6 @@ const DropdownMenu = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Position classes based on dropdownPosition prop
   const positionClasses = {
     bottom: "top-full left-0",
     top: "bottom-full left-0",
@@ -21,7 +20,6 @@ const DropdownMenu = ({
     left: "top-0 right-full",
   };
 
-  // Get the appropriate position class
   const positionClass =
     positionClasses[dropdownPosition] || positionClasses.bottom;
 
@@ -31,7 +29,6 @@ const DropdownMenu = ({
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      {/* Trigger button */}
       <div
         className={`flex items-center gap-2 cursor-pointer transition-transform duration-200 select-none ${triggerClassName}`}
       >
@@ -39,7 +36,6 @@ const DropdownMenu = ({
         {icon}
       </div>
 
-      {/* Dropdown menu */}
       <div
         className={`
           absolute z-50 min-w-max bg-white shadow-lg rounded-md py-2
@@ -56,11 +52,9 @@ const DropdownMenu = ({
         <div className="py-1">
           {items.map((item, index) => (
             <div key={index}>
-              {/* If the item is a custom component, render it */}
               {React.isValidElement(item) ? (
                 item
               ) : (
-                /* Otherwise render a standard item */
                 <div
                   className={`
                     px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer
@@ -71,11 +65,7 @@ const DropdownMenu = ({
                     setIsOpen(false);
                   }}
                 >
-                  {item.icon && (
-                    <span className="mr-2">
-                      {item.icon}
-                    </span>
-                  )}
+                  {item.icon && <span className="mr-2">{item.icon}</span>}
                   {item.label}
                 </div>
               )}
