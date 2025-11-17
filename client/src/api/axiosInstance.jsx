@@ -3,7 +3,7 @@ import { useAuthStore } from "../store/authStore";
 
 // Create the instance
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: import.meta.env.VITE_BASE_API_URL,
 });
 
 // REQUEST INTERCEPTOR - Add token to headers automatically
