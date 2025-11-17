@@ -4,7 +4,6 @@ const {
 } = require("../middleware/uploaders");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Product = require("../models/Product");
-const createUploader = require("../middleware/cloudinaryStorage");
 const Category = require("../models/Category");
 
 // Product Image Upload Handlers
