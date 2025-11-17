@@ -10,19 +10,21 @@ import CategoryFilters from "../../components/sections/Category/CategoryFilters"
 import { NewsCard, ProductCard } from "../cards";
 import { useFetchCategoryProducts } from "../../hooks/queries/useProducts";
 
-const DataWithFilters = ({ category, type = "products" }) => {
+const DataWithFilters = ({ category, type = "products", blogs }) => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1); // Default items per page
+  const limit = 3;
+  const shouldFetchProducts = type === "products" && category;
+
 
   const {
     data: productsData,
     isLoading,
     isError,
     error,
-  } = useFetchCategoryProducts(category, {
-    page,
-    limit,
+  } = useFetchCategoryProducts(shouldFetchProducts ? category : null, {
+    page: shouldFetchProducts ? page : 1,
+    limit: shouldFetchProducts ? limit : 3,
   });
 
   const handlePageChange = (newPage) => {
@@ -44,8 +46,7 @@ const DataWithFilters = ({ category, type = "products" }) => {
             end
             icon={<Settings2 />}
             size="medium"
-            onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-          >
+            onClick={() => setIsFiltersOpen(!isFiltersOpen)}>
             Filters
           </IconButton>
         </div>
@@ -54,8 +55,7 @@ const DataWithFilters = ({ category, type = "products" }) => {
         <div
           className={`flex items-center justify-end md:justify-between transition-all duration-300 ease-in-out w-fit ${
             isFiltersOpen ? "w-full md:w-3/4" : "w-full"
-          }`}
-        >
+          }`}>
           <div className="md:flex items-center gap-2 w-full sm:w-2/4 lg:w-1/4 hidden lg:min-w-[250px] ">
             <span className="text-sm whitespace-nowrap">Sort by</span>
             <Select options={[]} placeholder="Select" />
@@ -63,7 +63,7 @@ const DataWithFilters = ({ category, type = "products" }) => {
 
           <div className="whitespace-nowrap">
             <span className="font-semibold text-black mr-1">
-              {!isLoading && productsData.pagination.total}
+              {shouldFetchProducts && !isLoading && productsData.pagination.total}
             </span>
             Products Found
           </div>
@@ -78,8 +78,7 @@ const DataWithFilters = ({ category, type = "products" }) => {
             isFiltersOpen
               ? "w-full md:w-1/4 max-h-screen opacity-100"
               : "w-0 md:w-0 max-h-0 opacity-0"
-          }`}
-        >
+          }`}>
           <div className="min-w-max">
             <CategoryFilters />
           </div>
@@ -89,8 +88,7 @@ const DataWithFilters = ({ category, type = "products" }) => {
         <div
           className={`transition-all duration-300 ease-in-out h-full ${
             isFiltersOpen ? "w-full md:w-3/4" : "w-full"
-          }`}
-        >
+          }`}>
           {isLoading ? (
             <div className="w-full h-full min-h-[40vh] bg-white flex items-center justify-center">
               <LoaderCircle className="animate-spin h-6 w-6 text-primary" />
@@ -108,7 +106,7 @@ const DataWithFilters = ({ category, type = "products" }) => {
           ) : (
             type === "blogs" && (
               <GridContainer cols={2} gap={4}>
-                {productsData.products.map((blog, index) => (
+                {blogs.map((blog, index) => (
                   <NewsCard
                     key={blog._id || index}
                     blog={blog}
@@ -119,7 +117,7 @@ const DataWithFilters = ({ category, type = "products" }) => {
             )
           )}
 
-          {!isLoading && (
+          {shouldFetchProducts && !isLoading && (
             <Pagination
               currentPage={page}
               totalPages={productsData.pagination.pages}

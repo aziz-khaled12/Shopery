@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import BigCabbage from "/BigCabbage.png";
-import SliderImage1 from "/SliderImage1.png";
-import SliderImage2 from "/SliderImage2.png";
-import SliderImage3 from "/SliderImage3.png";
 
 import { Divider, IconButton, IconButton2, Modal } from "../ui";
 import {
@@ -122,7 +118,7 @@ const ProductModal = () => {
               icon={
                 <ShoppingCart
                   onClick={() => {
-                    addToCart({ ...product, quantity: count });
+                    addToCart(product, count);
                   }}
                 />
               }

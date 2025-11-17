@@ -14,6 +14,18 @@ export const fetchProductById = async (productId) => {
   }
 };
 
+export const fetchProductsWithIds = async (ids) => {
+  
+
+  try {
+    const res = await axiosInstance.post(`/shared/products/all`, { ids });
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching products by ids:", error);
+    throw error;
+  }
+};
+
 export const fetchProducts = async (section) => {
   try {
     const url = `/customer/products/${section || ""}`;
@@ -26,7 +38,7 @@ export const fetchProducts = async (section) => {
 };
 
 export const fetchCategoryProducts = async (category, page, limit) => {
-    try {
+  try {
     const url = `/shared/products/category/${category}?page=${page}&limit=${limit}`;
     const res = await axiosInstance.get(url);
     return res.data;
@@ -34,4 +46,4 @@ export const fetchCategoryProducts = async (category, page, limit) => {
     console.error("Error fetching popular products:", error);
     throw error;
   }
-}
+};

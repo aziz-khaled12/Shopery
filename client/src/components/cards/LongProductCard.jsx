@@ -31,7 +31,7 @@ const Product = ({ product }) => {
         >
           <IconButton2 icon={<ShoppingCart className="w-5 h-5" onClick={(e) => {
             e.stopPropagation();
-            addToCart({...product, quantity: 1});
+            addToCart(product, 1);
           }}/>}></IconButton2>
           <IconButton2 icon={<Eye />}></IconButton2>
           <IconButton2 icon={<Heart />}></IconButton2>

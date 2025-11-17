@@ -35,7 +35,6 @@ const userSchema = new Schema({
   billingAddress: {
     type: Schema.Types.ObjectId,
     ref: "BillingInfo",
-    required: true,
   },
   averageRating: {
     type: Number,

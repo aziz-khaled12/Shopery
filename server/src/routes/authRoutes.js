@@ -4,9 +4,7 @@ const authController = require('../controllers/authController');
 const { check } = require('express-validator');
 
 // Signup route
-router.post('/signup', [
-  check('email').isEmail().normalizeEmail(),
-], authController.signup);
+router.post('/signup', authController.signup);
 
 // Login route
 router.post('/login', [

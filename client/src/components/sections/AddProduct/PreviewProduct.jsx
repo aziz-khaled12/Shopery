@@ -20,10 +20,10 @@ const PreviewProduct = ({ formData }) => {
   const [count, setCount] = useState(0);
 const images = [formData.previewImage?.previewUrl, ...formData.images.map(img => img.previewUrl)];
 
-  const categories = useCategories().data;
-  const tags = useTags().data;
+  const {data: categories} = useCategories();
+  const {data: tags} = useTags();
 
-  console.log("tags: ", tags);
+  console.log("categories: ", categories);
 
   const getCategoryById = (id) => {
     const category = categories.find((cat) => cat.value === id);

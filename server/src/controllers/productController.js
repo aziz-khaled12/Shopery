@@ -75,7 +75,7 @@ exports.createProduct = catchAsyncErrors(async (req, res) => {
 
   // First create the product
   const product = await Product.create(newProduct);
-  
+
   if (!product) {
     return res.status(400).json({
       success: false,
@@ -90,7 +90,7 @@ exports.createProduct = catchAsyncErrors(async (req, res) => {
 
   res.status(201).json({
     success: true,
-    product: populatedProduct
+    product: populatedProduct,
   });
 });
 
@@ -193,7 +193,7 @@ exports.getProductsByCategory = catchAsyncErrors(async (req, res) => {
   const fullCategory = await Category.findOne({ name: category });
   const categoryId = fullCategory._id;
 
-  console.log("category id: ", categoryId)
+  console.log("category id: ", categoryId);
 
   const page = parseInt(req.query.page) || 1; // Default to page 1
   const limit = parseInt(req.query.limit) || 10; // Default 10 items per page
@@ -354,6 +354,31 @@ exports.getPopularProducts = catchAsyncErrors(async (req, res) => {
     return res.status(404).json({
       success: false,
       message: "No popular products found",
+    });
+  }
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
+exports.getProductsWithIds = catchAsyncErrors(async (req, res) => {
+  const { ids } = req.body; // Expecting an array of product IDs in the request body
+  console.log("Received IDs: ", ids);
+  if (!ids || !Array.isArray(ids) || ids.length === 0) {
+    return res.status(200).json({
+      success: false,
+      products: [],
+      message: "Product IDs are required",
+    });
+  }
+  const products = await Product.find({ _id: { $in: ids } })
+    .populate("category")
+    .populate("tags");
+  if (!products || products.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "No products found for the given IDs",
     });
   }
   res.status(200).json({

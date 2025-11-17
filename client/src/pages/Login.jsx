@@ -9,12 +9,11 @@ const Login = () => {
     email: "",
     password: "",
   });
-   const { mutate, isPending } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form data: ", formData)
-    mutate(formData);
+    mutate({ email: formData.email, password: formData.password });
   };
 
   const handleChange = (e) => {
@@ -24,8 +23,6 @@ const Login = () => {
       [name]: value,
     }));
   };
-
-  
 
   return (
     <div className="w-full flex items-center p-6 sm:px-page justify-center ">
@@ -61,7 +58,13 @@ const Login = () => {
           </div>
         </div>
         <div className="my-4 w-full">
-          <Button size="small" fullWidth onClick={handleSubmit} variant={isPending ? "disabled" : "fill"} disabled={isPending}>
+          <Button
+            size="small"
+            fullWidth
+            onClick={handleSubmit}
+            variant={isPending ? "disabled" : "fill"}
+            disabled={isPending}
+          >
             Login
           </Button>
         </div>

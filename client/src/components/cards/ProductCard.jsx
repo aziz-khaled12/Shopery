@@ -12,7 +12,9 @@ const ProductCard = ({ product, className = "" }) => {
   const { addToWishlist, isInWishlist, removeFromWishlist } =
     useWishlistStore();
 
-  const categoryId = product.category._id;
+  console.log("product: ", product);
+
+  const categoryId = product.categoryId;
   const navigate = useNavigate();
 
   const handleWishlist = (e) => {
@@ -91,7 +93,7 @@ const ProductCard = ({ product, className = "" }) => {
           className="ml-2 text-sm sm:text-base"
           onClick={(e) => {
             e.stopPropagation();
-            addToCart({ ...product, quantity: 1 });
+            addToCart(product, 1);
           }}
         />
       </div>

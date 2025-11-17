@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input } from "../components/ui";
 import { useNavigate } from "react-router-dom";
 import { useSignup } from "../hooks/mutations/useSignup";
@@ -95,13 +95,18 @@ const SignUp = () => {
 
     if (!validateForm()) return;
 
-    mutate(
-      formData.email,
-      formData.password,
-      formData.firstName,
-      formData.lastName
-    );
+    console.log("form data: ", formData);
+    mutate({
+      email: formData.email,
+      password: formData.password,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+    });
   };
+
+  useEffect(() => {
+    console.log("form data changed: ", formData);
+  }, [formData]);
 
   return (
     <div className="w-full flex items-center justify-center px-6 sm:px-page">

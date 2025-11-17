@@ -27,7 +27,7 @@ const BigProductCard = ({ product }) => {
         />
         <div className="flex gap-1 w-full px-4 sm:px-6 absolute bottom-4">
           <IconButton2 icon={<Heart />}></IconButton2>
-          <Button grow size={{ base: "small", sm: "medium" }} onClick={() => addToCart({...product, quantity: 1})}>
+          <Button grow size={{ base: "small", sm: "medium" }} onClick={() => addToCart(product, 1)}>
             Add to cart
           </Button>
           <IconButton2 icon={<Eye />}></IconButton2>

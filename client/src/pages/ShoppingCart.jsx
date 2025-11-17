@@ -9,10 +9,11 @@ import useCartStore from "../store/cartStore";
 const ShoppingCart = ({withTitle = true}) => {
   const navigate = useNavigate();
   const { cart, removeFromCart, updateQuantity } = useCartStore();
+  console.log("cart: ", cart)
 
   const subtotal =
     cart.length > 0
-      ? cart.reduce((sum, item) => sum + (item.discount.isActive ? item.discount.price : item.price) * item.quantity, 0)
+      ? cart.reduce((sum, item) => sum + (item.discount.isActive ? item.discount.price : item.price) * item.cartQuantity, 0)
       : 0;
 
   return (
@@ -38,19 +39,19 @@ const ShoppingCart = ({withTitle = true}) => {
             {/* Cart Items */}
             {cart.map((item) => (
               <div
-                key={item.id}
+                key={item._id}
                 className="p-4 border-b border-[#e6e6e6] last:border-b-0"
               >
                 {/* Desktop Layout */}
                 <div className="hidden md:grid md:grid-cols-12 gap-4 items-center">
                   <div className="col-span-5 flex items-center gap-3">
                     <img
-                      src={item.image}
-                      alt={item.title}
+                      src={item.previewImage}
+                      alt={item.name}
                       className="w-16 h-16 object-cover rounded"
                     />
                     <span className="text-[#1a1a1a] font-medium">
-                      {item.title}
+                      {item.name}
                     </span>
                   </div>
                   <div className="col-span-2 text-[#1a1a1a] font-semibold">
@@ -59,21 +60,21 @@ const ShoppingCart = ({withTitle = true}) => {
                   <div className="col-span-3">
                     <div className="max-w-[130px]">
                       <Counter
-                        count={item.quantity}
+                        count={item.cartQuantity}
                         setCount={(newCount) =>
-                          updateQuantity(item.id, newCount)
+                          updateQuantity(item._id, newCount)
                         }
                       />
                     </div>
                   </div>
                   <div className="col-span-1 text-[#1a1a1a] font-semibold">
-                    ${(item.discount.isActive ? item.discount.price : item.price) * item.quantity}
+                    ${(item.discount.isActive ? item.discount.price : item.price) * item.cartQuantity}
                   </div>
                   <div className="col-span-1">
                     <div className="w-8 h-8 p-0 cursor-pointer flex items-center justify-center">
                       <CircleX
                         className="w-4.5 h-4.5 text-[#999999] hover:text-danger"
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item._id)}
                       />
                     </div>
                   </div>
@@ -83,19 +84,19 @@ const ShoppingCart = ({withTitle = true}) => {
                 <div className="md:hidden">
                   <div className="flex gap-4">
                     <img
-                      src={item.image}
-                      alt={item.title}
+                      src={item.previewImage}
+                      alt={item.name}
                       className="w-20 h-20 object-cover rounded flex-shrink-0"
                     />
                     <div className="flex-grow">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="text-[#1a1a1a] font-medium text-sm">
-                          {item.title}
+                          {item.name}
                         </h3>
                         <div className="p-0 cursor-pointer flex items-center justify-center">
                           <CircleX
                             className="w-4 h-4 text-[#999999] hover:text-danger"
-                            onClick={() => removeFromCart(item.id)}
+                            onClick={() => removeFromCart(item._id)}
                           />
                         </div>
                       </div>
@@ -104,13 +105,13 @@ const ShoppingCart = ({withTitle = true}) => {
                       </div>
                       <div className="flex items-center justify-between">
                         <Counter
-                          count={item.quantity}
+                          count={item.cartQuantity}
                           setCount={(newCount) =>
-                            updateQuantity(item.id, newCount)
+                            updateQuantity(item._id, newCount)
                           }
                         />
                         <div className="text-[#1a1a1a] font-semibold">
-                          ${(item.discount.isActive ? item.discount.price : item.price) * item.quantity}
+                          ${(item.discount.isActive ? item.discount.price : item.price) * item.cartQuantity}
                         </div>
                       </div>
                     </div>

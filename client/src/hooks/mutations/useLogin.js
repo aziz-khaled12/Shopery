@@ -8,6 +8,7 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: async (loginData) => {
+      console.log("login data: ", loginData);
       const res = await axiosInstance.post(`/auth/login`, loginData);
       return res.data.token;
     },

@@ -5,15 +5,15 @@ const billingInfoSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    required: false,
   },
   firstName: {
     type: String,
-    required: true,
+    required: false,
   },
   lastName: {
     type: String,
-    required: true,
+    required: false,
   },
   company: {
     type: String,
@@ -21,33 +21,33 @@ const billingInfoSchema = new Schema({
   },
   street: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
   country: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
   state: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
   zipCode: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
     lowercase: true,
   },
   phone: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
   modifiedAt: {

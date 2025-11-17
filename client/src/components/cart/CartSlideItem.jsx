@@ -6,21 +6,22 @@ import useCartStore from "../../store/cartStore";
 
 const CartSlideItem = ({ item }) => {
   const { removeFromCart } = useCartStore();
-  const { image, title, quantity, unit, unitPrice } = item;
+  console.log("item: ", item)
+  const { previewImage, name, cartQuantity, unit, price } = item;
   return (
     <div className="flex items-center gap-2 w-full text-2xs md:text-sm">
       <div className="md:w-[120px] max-w-[120px]">
         <img
-          src={image || ShoppingCart1}
+          src={previewImage || ShoppingCart1}
           alt="shopping cart"
           className="w-full h-auto"
         />
       </div>
       <div className="md:grow md:w-auto w-full">
-        <h1 className="mb-0.5">{title}</h1>
+        <h1 className="mb-0.5">{name}</h1>
         <p className="font-semibold">
-          <span className="text-gray-400 font-normal">{`${quantity}${unit} x `}</span>
-          {unitPrice}
+          <span className="text-gray-400 font-normal">{`${cartQuantity}${unit} x `}</span>
+          {price}
         </p>
       </div>
       <div>

@@ -16,24 +16,35 @@ const generateToken = (userId, role) => {
 // Signup Controller
 exports.signup = async (req, res) => {
   const errors = validationResult(req);
+  console.log("Validation errors: ", errors);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
   const { email, password } = req.body;
 
+  console.log("Signup request body: ", req.body);
+
+
   try {
     // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log("User already exists with email: ", email);
       return res.status(400).json({ message: 'Email already exists' });
     }
+
+    
 
     // Find customer role
     const customerRole = await Role.findOne({ name: 'customer' });
     if (!customerRole) {
+      console.error("Customer role not found in the database");
       return res.status(500).json({ message: 'Customer role not configured' });
     }
+
+    console.log("customerRole: ", customerRole)
+    console.log("req.body: ", req.body )
 
     // Create new user
     const newUser = new User({
@@ -44,11 +55,15 @@ exports.signup = async (req, res) => {
       lastName: req.body.lastName || ''
     });
 
+    console.log("newUser before save: ", newUser)
+
     await newUser.save();
 
     const billingInfo = new BillingInfo({
       userId: newUser._id
     })
+
+    console.log("billingInfo before save: ", billingInfo)
 
     await billingInfo.save()
     await User.findByIdAndUpdate(newUser._id, {billingAddress: billingInfo._id})

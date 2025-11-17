@@ -11,7 +11,7 @@ import { CheckoutItem } from "../components/cart";
 const Checkout = () => {
 
   const { cart } = useCartStore();
-  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((acc, item) => acc + item.price * item.cartQuantity, 0);
   const total = subtotal + 10;
 
   return (

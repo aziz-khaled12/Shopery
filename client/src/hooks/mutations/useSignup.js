@@ -8,7 +8,8 @@ export const useSignup = () => {
 
   return useMutation({
     mutationFn: async (signupData) => {
-      const res = await axiosInstance.post(`/auth/login`, signupData);
+      console.log("signup data: ", signupData);
+      const res = await axiosInstance.post(`/auth/signup`, signupData);
       return res.data.token;
     },
     onSuccess: (token) => {
